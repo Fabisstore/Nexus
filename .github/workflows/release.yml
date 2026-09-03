@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Windows Installer bauen
-        run: npm run build
+        run: npm run build -- --publish never
 
       - name: Release erstellen
         uses: softprops/action-gh-release@v2
