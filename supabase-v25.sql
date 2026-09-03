@@ -3,6 +3,7 @@
 
 alter table public.profiles
   add column if not exists nexus_plus boolean not null default false,
+  add column if not exists is_owner boolean not null default false,
   add column if not exists username text,
   add column if not exists avatar_url text,
   add column if not exists bio text,
@@ -14,7 +15,10 @@ alter table public.profiles enable row level security;
 drop policy if exists "Nexus users update own profile" on public.profiles;
 create policy "Nexus users update own profile"
 on public.profiles for update to authenticated
-using (id = auth.uid()) with check (id = auth.uid());
+using (id = auth.uid()) with check (id = auth.uid()
+  and nexus_plus = (select p.nexus_plus from public.profiles p where p.id = auth.uid())
+  and is_owner = (select p.is_owner from public.profiles p where p.id = auth.uid())
+);
 
 drop policy if exists "Nexus users read profiles" on public.profiles;
 create policy "Nexus users read profiles"
@@ -23,7 +27,8 @@ on public.profiles for select to authenticated using (true);
 update public.profiles
 set status = coalesce(nullif(status,''),'offline'),
     preferences = coalesce(preferences,'{}'::jsonb),
-    nexus_plus = coalesce(nexus_plus,false)
+    nexus_plus = coalesce(nexus_plus,false),
+    is_owner = coalesce(is_owner,false)
 where status is null or preferences is null or nexus_plus is null;
 
 -- Öffentliche Communities können gefunden werden.
@@ -54,31 +59,31 @@ drop policy if exists "Plus users read own documents" on public.plus_documents;
 create policy "Plus users read own documents"
 on public.plus_documents for select to authenticated
 using (user_id = auth.uid() and exists (
-  select 1 from public.profiles p where p.id = auth.uid() and p.nexus_plus = true
+  select 1 from public.profiles p where p.id = auth.uid() and (p.nexus_plus = true or p.is_owner = true)
 ));
 
 drop policy if exists "Plus users insert own documents" on public.plus_documents;
 create policy "Plus users insert own documents"
 on public.plus_documents for insert to authenticated
 with check (user_id = auth.uid() and exists (
-  select 1 from public.profiles p where p.id = auth.uid() and p.nexus_plus = true
+  select 1 from public.profiles p where p.id = auth.uid() and (p.nexus_plus = true or p.is_owner = true)
 ));
 
 drop policy if exists "Plus users update own documents" on public.plus_documents;
 create policy "Plus users update own documents"
 on public.plus_documents for update to authenticated
 using (user_id = auth.uid() and exists (
-  select 1 from public.profiles p where p.id = auth.uid() and p.nexus_plus = true
+  select 1 from public.profiles p where p.id = auth.uid() and (p.nexus_plus = true or p.is_owner = true)
 ))
 with check (user_id = auth.uid() and exists (
-  select 1 from public.profiles p where p.id = auth.uid() and p.nexus_plus = true
+  select 1 from public.profiles p where p.id = auth.uid() and (p.nexus_plus = true or p.is_owner = true)
 ));
 
 drop policy if exists "Plus users delete own documents" on public.plus_documents;
 create policy "Plus users delete own documents"
 on public.plus_documents for delete to authenticated
 using (user_id = auth.uid() and exists (
-  select 1 from public.profiles p where p.id = auth.uid() and p.nexus_plus = true
+  select 1 from public.profiles p where p.id = auth.uid() and (p.nexus_plus = true or p.is_owner = true)
 ));
 
 -- Storage: korrekter owner_id-Typ.
@@ -187,3 +192,10 @@ drop policy if exists "Nexus members send direct messages" on public.direct_mess
 create policy "Nexus members send direct messages"
 on public.direct_messages for insert to authenticated
 with check (author_id = auth.uid() and public.is_direct_member(conversation_id, auth.uid()));
+
+
+-- V26 OWNER-ZUGANG
+-- Fabisstore wird NICHT ueber Stripe freigeschaltet und muss niemals selbst zahlen.
+-- Nach dem Einsetzen dieses SQL einmalig die eigene Auth-User-ID einsetzen:
+-- update public.profiles set is_owner = true where id = 'DEINE-USER-ID'::uuid;
+-- Diese Spalte darf danach nicht von normalen Profil-Updates geaendert werden.
