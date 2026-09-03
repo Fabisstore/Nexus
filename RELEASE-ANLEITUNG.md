@@ -20,3 +20,13 @@ Installierte Nexus-Versionen prüfen automatisch auf Updates. Bei einem verfügb
 ## Hinweis
 
 Der Installer kann hier nicht lokal erzeugt werden, weil diese Entwicklungsumgebung kein Windows-Buildsystem besitzt. Der GitHub-Windows-Runner übernimmt genau diesen Schritt.
+
+
+## V23 – Nexus Plus
+1. In Supabase zuerst `supabase-v23.sql` komplett ausführen.
+2. Die drei Edge Functions aus `supabase/functions/` bereitstellen.
+3. In Supabase Secrets setzen: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`.
+4. In Stripe einen Webhook auf `.../functions/v1/stripe-webhook` anlegen und `checkout.session.completed` aktivieren.
+5. Danach die V23-Dateien ins GitHub-Repository hochladen und den Windows-Build starten.
+
+Die Zahlungsbestätigung erfolgt serverseitig über den Stripe-Webhook; ein bloßes Klicken auf „Status prüfen“ schaltet Plus nicht frei.

@@ -27,3 +27,11 @@ WebRTC uses STUN for direct peer connections. Production worldwide calling shoul
 
 ## Windows installer
 The package already contains electron-builder configuration for a normal NSIS installer (`Nexus-Setup-<version>.exe`). A Windows build environment is required to produce the final installer artifact.
+
+
+## Nexus Plus V23
+Nexus Plus ist eine einmalige Zahlung von 5,00 €. Es gibt kein Monats- oder Jahresabo. Nach bestätigter Stripe-Zahlung wird `profiles.nexus_plus` serverseitig aktiviert. Nexus Office ist anschließend im Konto verfügbar.
+
+Für die Live-Zahlung müssen die Supabase Edge Functions unter `supabase/functions/` deployed und die dort genannten Stripe/Supabase Secrets gesetzt werden. Die App enthält keine geheimen Stripe-Schlüssel.
+
+Vor dem ersten Plus-Test: `supabase-v23.sql` im Supabase SQL Editor ausführen.

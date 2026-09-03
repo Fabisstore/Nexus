@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, session } = require('electron');
+const { app, BrowserWindow, ipcMain, session, shell } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
@@ -29,6 +29,11 @@ function saveConfig(config) {
 
 ipcMain.handle('config:get', () => readConfig());
 ipcMain.handle('config:save', (_event, config) => saveConfig(config));
+ipcMain.handle('external:open', (_event, url) => {
+  const u = String(url || '');
+  if (!/^https:\/\//i.test(u)) throw new Error('Only HTTPS URLs are allowed');
+  return shell.openExternal(u);
+});
 
 function setupAutoUpdates(win) {
   autoUpdater.autoDownload = false;

@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('nexus', {
   getConfig: () => ipcRenderer.invoke('config:get'),
+  openExternal: (url) => ipcRenderer.invoke('external:open', url),
   saveConfig: (config) => ipcRenderer.invoke('config:save', config),
   updates: {
     check: () => ipcRenderer.invoke('update:check'),
