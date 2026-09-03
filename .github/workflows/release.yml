@@ -1,17 +1,14 @@
-name: Windows Release
+name: Nexus Windows Build
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "v*"
 
 jobs:
   build-windows:
     runs-on: windows-latest
 
     steps:
-      - name: Repository herunterladen
+      - name: Projekt herunterladen
         uses: actions/checkout@v4
 
       - name: Node.js einrichten
@@ -25,10 +22,9 @@ jobs:
       - name: Windows Installer bauen
         run: npm run build -- --publish never
 
-      - name: Release erstellen
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Installer als Download bereitstellen
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            dist/*.exe
-            dist/*.yml
+          name: Nexus-Windows-Installer
+          path: dist/*
+          if-no-files-found: error
