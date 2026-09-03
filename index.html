@@ -16,6 +16,17 @@
 
 .communityLayout{display:grid;grid-template-columns:250px 1fr;gap:14px;min-height:520px}.channelPanel{padding:10px}.channelHeader{padding:10px 8px 12px;color:#dffaff}.channelItem{padding:11px 12px;border-radius:11px;cursor:pointer;color:#b7cbd2;display:flex;gap:8px;align-items:center}.channelItem:hover,.channelItem.active{background:#112430;color:#fff}.channelType{font-size:10px;color:#718994;margin-left:auto}.channelPanel .list{gap:3px}
 @media(max-width:760px){.communityLayout{grid-template-columns:1fr}.channelPanel{min-height:auto}}
+
+.betaBadge{position:fixed;left:18px;bottom:18px;z-index:90;background:rgba(7,16,24,.94);border:1px solid #20ddff55;color:#bfefff;border-radius:12px;padding:7px 11px;font-size:11px;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.profileDock{position:fixed;left:18px;bottom:55px;z-index:89;width:245px;background:#09131b;border:1px solid #19303b;border-radius:15px;padding:10px;display:flex;align-items:center;gap:10px;box-shadow:0 12px 35px rgba(0,0,0,.35);cursor:pointer}
+.profileDock:hover{border-color:#20ddff88}.profileDock .avatar{flex:none;width:40px;height:40px}.profileDockInfo{min-width:0;flex:1}.profileDockName{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profileDockTag{font-size:11px;color:#78909c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profileEdit{font-size:11px;color:#20ddff}
+.profilePreview{display:flex;align-items:center;gap:14px;margin-bottom:16px}.profilePreview .avatar{width:64px;height:64px;font-size:24px}
+.avatarImg{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+
+/* Nexus V19 — presence, settings & themes */
+.statusPill{cursor:pointer;user-select:none}.statusDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--good);box-shadow:0 0 8px currentColor}.status-online{color:#3fe29a}.status-away{color:#ffc857}.status-offline{color:#738691}.statusMenu{position:fixed;right:28px;top:64px;z-index:30;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:7px;box-shadow:var(--shadow);display:none;min-width:170px}.statusMenu.open{display:block}.statusOption{width:100%;text-align:left;background:transparent;padding:10px;border-radius:10px;color:var(--text)}.statusOption:hover{background:var(--panel2)}
+.settingsLayout{display:grid;grid-template-columns:170px 1fr;gap:14px}.settingsNav{display:grid;gap:5px}.settingsNav button{text-align:left;background:transparent;padding:10px 12px;border-radius:10px;color:var(--muted)}.settingsNav button.active,.settingsNav button:hover{background:var(--panel2);color:var(--text)}.settingsPage{display:none}.settingsPage.active{display:block}.settingRow{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid var(--line)}.settingRow:last-child{border-bottom:0}.settingInfo b{display:block}.settingInfo span{display:block;color:var(--muted);font-size:11px;margin-top:3px}.switch{position:relative;width:44px;height:24px;flex:none}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#23343e;border-radius:20px;cursor:pointer}.slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.18s}.switch input:checked+.slider{background:var(--cyan)}.switch input:checked+.slider:before{transform:translateX(20px);background:#001116}.themeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.themeChoice{padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;text-align:center}.themeChoice.active{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}.themeSwatch{height:32px;border-radius:8px;margin-bottom:7px}.colorGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.colorChoice{height:32px;border-radius:9px;border:2px solid transparent;cursor:pointer}.colorChoice.active{border-color:#fff;box-shadow:0 0 0 2px var(--cyan)}.settingsDanger{border-color:rgba(255,85,119,.3);background:rgba(255,85,119,.04)}.compactMode .quick{min-height:140px}.compactMode .row,.compactMode .chatItem{padding:8px}.reduceMotion *{transition:none!important;scroll-behavior:auto!important}
+@media(max-width:700px){.settingsLayout{grid-template-columns:1fr}.themeGrid{grid-template-columns:repeat(2,1fr)}.colorGrid{grid-template-columns:repeat(4,1fr)}}
 </style><style>
 /* Nexus V18 communication layer */
 .mediaPlus{width:42px;height:42px;border-radius:12px;background:#102b35;border:1px solid #1b4653;font-size:22px;color:#20ddff;flex:none}
@@ -35,13 +46,14 @@
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><img src="assets/nexus-logo.png"><div class="brandText">Nexus<small>by Fabisstore</small></div></div><input class="topSearch" placeholder="Nexus durchsuchen…" onkeydown="if(event.key==='Enter')globalSearch(this.value)"><div class="topRight"><div class="pill">Status: <span>unsichtbar</span></div><button class="btn" id="accountBtn" onclick="openAccount()">Anmelden</button></div></header>
+<header class="top"><div class="brand"><img src="assets/nexus-logo.png"><div class="brandText">Nexus<small>by Fabisstore</small></div></div><input class="topSearch" placeholder="Nexus durchsuchen…" onkeydown="if(event.key==='Enter')globalSearch(this.value)"><div class="topRight"><div class="pill statusPill" id="statusPill" onclick="toggleStatusMenu()"><span id="statusDot" class="statusDot status-online"></span>Status: <span id="statusText">Online</span></div><button class="btn" onclick="openSettings()">⚙ Einstellungen</button><button class="btn" id="accountBtn" onclick="openAccount()">Anmelden</button></div><div id="statusMenu" class="statusMenu"><button class="statusOption" onclick="setPresence('online')">🟢 Online</button><button class="statusOption" onclick="setPresence('away')">🟡 Abwesend</button><button class="statusOption" onclick="setPresence('offline')">⚫ Offline</button></div></header>
+<div id="profileDock" class="profileDock" onclick="openProfileSettings()"><div class="avatar" id="dockAvatar">?</div><div class="profileDockInfo"><div class="profileDockName" id="dockName">Nicht angemeldet</div><div class="profileDockTag" id="dockTag">Nexus-Profil</div></div><div class="profileEdit">Profil</div></div><div class="betaBadge">Nexus befindet sich noch in der Beta</div>
 <main class="main">
 <section id="home" class="view active">
 <div class="welcome"><h1>Willkommen bei Nexus</h1><p>Deine zentrale Startseite für Freunde, Nachrichten und Communities.</p></div>
 <div class="searchGrid">
-<div class="searchCard"><div class="searchHead"><div class="searchIcon">⌕</div><div><h2>Community suchen</h2><p>Finde öffentliche Communities oder nutze einen Namen.</p></div></div><div class="searchRow"><input id="homeCommunityQ" placeholder="z. B. GTA 6, Minecraft, Gaming…"><button class="btn primary" onclick="homeCommunitySearch()">Suchen</button></div></div>
-<div class="searchCard"><div class="searchHead"><div class="searchIcon">♙</div><div><h2>Freunde finden</h2><p>Suche nach Name, Benutzername oder Nexus-Code.</p></div></div><div class="searchRow"><input id="homeFriendQ" placeholder="z. B. @Alex oder NX-1234…"><button class="btn primary" onclick="homeFriendSearch()">Suchen</button></div></div>
+<div class="searchCard"><div class="searchHead"><div class="searchIcon">⌕</div><div><h2>Community suchen</h2><p>Finde öffentliche Communities oder nutze einen Namen.</p></div></div><div class="searchRow"><input id="homeCommunityQ" placeholder="Community suchen…"><button class="btn primary" onclick="homeCommunitySearch()">Suchen</button></div></div>
+<div class="searchCard"><div class="searchHead"><div class="searchIcon">♙</div><div><h2>Freunde finden</h2><p>Suche nach Name, Benutzername oder Nexus-Code.</p></div></div><div class="searchRow"><input id="homeFriendQ" placeholder="@Benutzername oder Nexus-Code…"><button class="btn primary" onclick="homeFriendSearch()">Suchen</button></div></div>
 </div>
 <div class="quickGrid">
 <button class="quick" onclick="go('friends')"><div><div class="quickIcon">♙</div><h3>Freunde</h3><p>Deine Freundesliste, Anfragen, Profile und direkte Chats.</p></div><div class="arrow">Öffnen →</div></button>
@@ -54,7 +66,7 @@
 
 <section id="friends" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="viewHead"><div><h1>Freunde</h1><p>Freunde, Anfragen und neue Kontakte.</p></div><button class="btn primary" onclick="openModal('addfriend')">＋ Freund hinzufügen</button></div><div class="panel"><div class="searchRow"><input id="friendQ" placeholder="Freund oder Nexus-Code suchen"><button class="btn" onclick="searchFriend()">Suchen</button></div><div id="friendResults"></div></div><div class="panel" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><h3 style="margin:0">Freundschaftsanfragen</h3><div class="muted">Eingehende Anfragen findest du immer hier.</div></div><span id="friendRequestCount" class="pill">0</span></div><div id="friendRequestsList" class="list" style="margin-top:14px"></div></div><div class="panel" style="margin-top:14px"><h3 style="margin-top:0">Meine Freunde</h3><div id="friendsList" class="list"></div></div></section>
 
-<section id="communities" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="viewHead"><div><h1>Communities</h1><p>Öffentliche Server entdecken oder deine eigene Community erstellen.</p></div><button class="btn primary" onclick="openModal('server')">＋ Community erstellen</button></div><div class="panel"><div class="searchRow"><input id="serverQ" placeholder="z. B. GTA 6, Minecraft, Fortnite…"><button class="btn" onclick="searchCommunity()">Suchen</button></div><div id="serverResults"></div></div><div class="serverGrid" id="publicServers"></div></section>
+<section id="communities" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="viewHead"><div><h1>Communities</h1><p>Öffentliche Server entdecken oder deine eigene Community erstellen.</p></div><button class="btn primary" onclick="openModal('server')">＋ Community erstellen</button></div><div class="panel"><div class="searchRow"><input id="serverQ" placeholder="Community suchen…"><button class="btn" onclick="searchCommunity()">Suchen</button></div><div id="serverResults"></div></div><div class="serverGrid" id="publicServers"></div></section>
 
 <section id="communityView" class="view"><div class="back"><button class="btn" onclick="go('communities')">← Communities</button></div><div class="viewHead"><div><h1 id="communityTitle">Community</h1><p id="communityDesc">Deine Community</p></div><button class="btn" onclick="go('communities')">Zurück</button></div><div class="communityLayout"><aside class="panel channelPanel"><div class="channelHeader"><b>Kanäle</b></div><div id="communityChannels" class="list"></div></aside><div class="chat"><div class="chatTop"><div class="communityLogo" id="communityChannelIcon">#</div><div><b id="communityChannelName">Allgemein</b><div class="muted" id="communityChannelType">Textkanal</div></div></div><div class="chatBody" id="communityChatBody"><div class="muted">Wähle einen Kanal.</div></div><div class="chatBottom"><input id="communityMessageInput" placeholder="Nachricht schreiben…" onkeydown="if(event.key==='Enter')sendCommunityMessage()"><button class="btn primary" onclick="sendCommunityMessage()">Senden</button></div></div></div></section>
 
@@ -65,12 +77,7 @@
 <div class="modalBack" id="back"><div class="modal" id="modal"></div></div><div class="toast" id="toast"></div>
 <script>
 const KEY='nexus_v6';
-const publicServers=[
-{id:'gta6',name:'GTA 6 Deutschland',desc:'GTA 6 News, Community, Clips und Gaming.',members:'12.4K Mitglieder',icon:'G'},
-{id:'minecraft',name:'Minecraft Deutschland',desc:'Survival, SMP, Bauen und gemeinsame Projekte.',members:'8.7K Mitglieder',icon:'M'},
-{id:'fortnite',name:'Fortnite Germany',desc:'Matches, Teams, Events und LFG.',members:'6.2K Mitglieder',icon:'F'},
-{id:'gaming',name:'Nexus Gaming',desc:'Allgemeine Gaming-Community für PC und Konsole.',members:'4.1K Mitglieder',icon:'N'}
-];
+const publicServers=[];
 let state=JSON.parse(localStorage.getItem(KEY)||'null')||{friends:[],communities:[],requests:[],account:null};
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function showToast(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',2600)}
@@ -246,31 +253,62 @@ async function loadProfileAndFriends(){
     if(profile){
       state.account=profile;
       save();
+      updateProfileDock();
     }
     const {data:friendRows}=await supabaseClient.from('friendships').select('friend_id,user_id,status').or(`user_id.eq.${currentUser.id},friend_id.eq.${currentUser.id}`).eq('status','accepted');
     if(friendRows?.length){
       const ids=friendRows.map(x=>x.user_id===currentUser.id?x.friend_id:x.user_id);
       const {data:profiles}=await supabaseClient.from('profiles').select('id,username,display_name,status').in('id',ids);
-      if(profiles) state.friends=profiles.map(p=>({id:p.id,name:p.display_name||p.username,tag:'@'+p.username,online:p.status==='online'}));
+      if(profiles) state.friends=profiles.map(p=>({id:p.id,name:p.display_name||p.username,tag:'@'+p.username,online:p.status==='online',status:p.status||'offline'}));
       save();renderFriends();renderChats();loadFriendRequests();
     }
   }catch(e){console.error(e)}
 }
 
 
+function profileData(){
+  const p=state.account||{};
+  const meta=currentUser?.user_metadata||{};
+  return {name:p.display_name||meta.display_name||currentUser?.email?.split('@')[0]||'Nexus-Nutzer',username:p.username||meta.username||'',bio:p.bio||meta.bio||'',avatar:p.avatar_url||meta.avatar_url||''};
+}
+function profileAvatarHtml(p){return p.avatar?'<img class="avatarImg" src="'+esc(p.avatar)+'" alt="Profilbild">':esc((p.name||'?')[0].toUpperCase())}
+function profileEditorHtml(){
+  const p=profileData();
+  return '<h2>Mein Profil</h2><div class="profilePreview"><div class="avatar" id="profilePreviewAvatar">'+profileAvatarHtml(p)+'</div><div><b id="profilePreviewName">'+esc(p.name)+'</b><div class="muted">@'+esc(p.username||'noch kein Benutzername')+'</div></div></div><div class="field"><label>Anzeigename</label><input id="profileName" value="'+esc(p.name)+'" maxlength="40"></div><div class="field"><label>Benutzername</label><input id="profileUsername" value="'+esc(p.username)+'" maxlength="32" placeholder="Dein Benutzername"></div><div class="field"><label>Profilbild-URL</label><input id="profileAvatar" value="'+esc(p.avatar)+'" placeholder="Bild-URL einfügen"></div><div class="field"><label>Über mich</label><textarea id="profileBio" maxlength="160" placeholder="Erzähl etwas über dich…" style="width:100%;min-height:80px;resize:vertical">'+esc(p.bio)+'</textarea></div><div class="notice">Profilbild und Profildaten werden mit deinem Nexus-Konto verknüpft, soweit die Online-Datenbank die jeweiligen Felder unterstützt.</div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="saveProfile()">Speichern</button><button class="btn" onclick="logoutNexus()">Abmelden</button></div>';
+}
+function openProfileSettings(){if(!currentUser){openModal('login');return}openModal('profile')}
+function updateProfileDock(){
+  const p=profileData(); const a=document.getElementById('dockAvatar'); const n=document.getElementById('dockName'); const t=document.getElementById('dockTag');
+  if(!a||!n||!t)return; a.innerHTML=profileAvatarHtml(p); n.textContent=p.name; t.textContent=p.username?'@'+p.username:'Nexus-Profil';
+}
+async function saveProfile(){
+  if(!currentUser){showToast('Bitte zuerst anmelden.');return}
+  const name=document.getElementById('profileName')?.value.trim()||'Nexus-Nutzer';
+  const username=document.getElementById('profileUsername')?.value.trim().replace(/^@/,'')||'';
+  const avatar=document.getElementById('profileAvatar')?.value.trim()||'';
+  const bio=document.getElementById('profileBio')?.value.trim()||'';
+  try{
+    const {error:ae}=await supabaseClient.auth.updateUser({data:{display_name:name,username,avatar_url:avatar,bio}});
+    if(ae)throw ae;
+    const {error:pe}=await supabaseClient.from('profiles').update({display_name:name}).eq('id',currentUser.id);
+    if(pe)console.warn('Profil konnte nicht vollständig gespeichert werden:',pe);
+    state.account={...(state.account||{}),display_name:name,username,avatar_url:avatar,bio};save();updateAccountUI();updateProfileDock();closeModal();showToast('Profil gespeichert.');
+  }catch(e){console.error(e);showToast('Profil konnte nicht gespeichert werden: '+(e.message||e))}
+}
 function openModal(type){
   const b=document.getElementById('back'),m=document.getElementById('modal');
   b.style.display='flex';
   if(type==='login')m.innerHTML='<h2>Bei Nexus anmelden</h2><p>Nutze dein Nexus-Konto.</p><div class="field"><label>E-Mail</label><input id="loginEmail" type="email" autocomplete="email"></div><div class="field"><label>Passwort</label><input id="loginPassword" type="password" autocomplete="current-password" onkeydown="if(event.key===\'Enter\')loginEmail()"></div><div class="modalActions"><button class="btn" onclick="openModal(\'signup\')">Konto erstellen</button><button class="btn primary" onclick="loginEmail()">Anmelden</button></div>';
   if(type==='signup')m.innerHTML='<h2>Nexus-Konto erstellen</h2><p>Dein Konto funktioniert auf allen Geräten.</p><div class="field"><label>Anzeigename</label><input id="signupName" autocomplete="name"></div><div class="field"><label>E-Mail</label><input id="signupEmail" type="email" autocomplete="email"></div><div class="field"><label>Passwort</label><input id="signupPassword" type="password" autocomplete="new-password"></div><div class="modalActions"><button class="btn" onclick="openModal(\'login\')">Zur Anmeldung</button><button class="btn primary" onclick="signupEmail()">Konto erstellen</button></div>';
-  if(type==='account')m.innerHTML='<h2>'+esc(currentUser?.user_metadata?.display_name||currentUser?.email||'Nexus-Konto')+'</h2><p>Dein Nexus-Konto ist verbunden.</p><div class="notice">Die globale System- und Updateverwaltung bleibt beim Hauptadministrator Fabisstore.</div><div class="modalActions"><button class="btn" onclick="closeModal()">Schließen</button><button class="btn" onclick="logoutNexus()">Abmelden</button></div>';
-  if(type==='profile')m.innerHTML='<h2>Fabisstore</h2><p>Haupt-Admin</p><div class="notice">Nur Fabisstore erhält die globale Update- und Systemverwaltung.</div><div class="modalActions"><button class="btn" onclick="closeModal()">Schließen</button></div>';
+  if(type==='account')m.innerHTML=profileEditorHtml();
+  if(type==='profile')m.innerHTML=profileEditorHtml();
   if(type==='server')m.innerHTML='<h2>Community erstellen</h2><p>Erstelle deine eigene Nexus-Community.</p><div class="field"><label>Name</label><input id="sn" value="Meine Community"></div><div class="field"><label>Beschreibung</label><input id="sd" value="Meine neue Nexus-Community"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="createCommunity()">Erstellen</button></div>';
   if(type==='addfriend')m.innerHTML='<h2>Freund hinzufügen</h2><p>Suche nach Benutzername oder Nexus-Code.</p><div class="field"><label>Benutzername / Code</label><input id="fq" placeholder="@alex oder NX-1234"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="searchAndAddFriendFromModal()">Anfrage senden</button></div>';
   if(type==='newchat')m.innerHTML='<h2>Neuer Chat</h2><p>Starte eine private Unterhaltung.</p><div class="field"><label>Empfänger</label><input placeholder="Benutzername oder Nexus-Code"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="closeModal();showToast(\'Chat wird erstellt.\');go(\'messages\')">Starten</button></div>';
 }
 
 loadSupabase();
+updateProfileDock();
 renderFriends();renderChats();renderPublicServers();save();
 
 
@@ -346,4 +384,41 @@ window.startCall=async function(name){const f=(state.friends||[]).find(x=>x.name
 const v18OldLoadSupabase2=window.loadSupabase;
 window.loadSupabase=async function(){await v18OldLoadSupabase2();setTimeout(v18InitUserSignal,1000)};
 setTimeout(()=>{v18EnsureUI();v18AddChannelTools();v18PatchCommunityHeader();if(currentUser)v18InitUserSignal()},1200);
+
+
+/* V19: presence + full appearance/settings */
+const NEXUS_PREFS_KEY='nexus_preferences_v19';
+const nexusDefaults={theme:'midnight',accent:'#20ddff',compact:false,reduceMotion:false,sounds:true,showBeta:true,autoStart:true};
+let nexusPrefs={...nexusDefaults,...JSON.parse(localStorage.getItem(NEXUS_PREFS_KEY)||'{}')};
+function saveNexusPrefs(){localStorage.setItem(NEXUS_PREFS_KEY,JSON.stringify(nexusPrefs))}
+function applyNexusPrefs(){
+ document.documentElement.style.setProperty('--cyan',nexusPrefs.accent);
+ const themes={midnight:['#060a10','#0b121b','#0e1924'],oled:['#000000','#050505','#0b0b0b'],light:['#eef4f7','#ffffff','#e4edf1'],slate:['#111827','#172033','#202b40'],neon:['#08040f','#12081d','#1b0d2b']};
+ const t=themes[nexusPrefs.theme]||themes.midnight; document.documentElement.style.setProperty('--bg',t[0]);document.documentElement.style.setProperty('--panel',t[1]);document.documentElement.style.setProperty('--panel2',t[2]);
+ document.body.classList.toggle('compactMode',!!nexusPrefs.compact);document.body.classList.toggle('reduceMotion',!!nexusPrefs.reduceMotion);
+ if(nexusPrefs.theme==='light'){document.body.style.background='linear-gradient(135deg,#eef4f7,#dfe9ee)';document.documentElement.style.setProperty('--text','#14232c');document.documentElement.style.setProperty('--muted','#5d717c')}else{document.body.style.background='';document.documentElement.style.setProperty('--text','#effcff');document.documentElement.style.setProperty('--muted','#8196a3')}
+ const b=document.querySelector('.betaBadge');if(b)b.style.display=nexusPrefs.showBeta?'block':'none';
+}
+function presenceLabel(v){return v==='away'?'Abwesend':v==='offline'?'Offline':'Online'}
+function updatePresenceUI(){const v=state.presence||'online';const text=document.getElementById('statusText'),dot=document.getElementById('statusDot');if(text)text.textContent=presenceLabel(v);if(dot){dot.className='statusDot '+(v==='online'?'status-online':v==='away'?'status-away':'status-offline')}}
+function toggleStatusMenu(){document.getElementById('statusMenu')?.classList.toggle('open')}
+async function setPresence(status){state.presence=status;save();updatePresenceUI();document.getElementById('statusMenu')?.classList.remove('open');if(supabaseClient&&currentUser){const {error}=await supabaseClient.from('profiles').update({status}).eq('id',currentUser.id);if(error)console.warn('Status konnte nicht gespeichert werden',error)}showToast('Status: '+presenceLabel(status))}
+function settingsHtml(){return `<h2>⚙ Nexus Einstellungen</h2><p>Persönliche Einstellungen, Darstellung und Verhalten von Nexus.</p><div class="settingsLayout"><div class="settingsNav"><button class="active" onclick="settingsTab('appearance',this)">🎨 Darstellung</button><button onclick="settingsTab('profile',this)">👤 Profil</button><button onclick="settingsTab('privacy',this)">🔒 Datenschutz</button><button onclick="settingsTab('notifications',this)">🔔 Benachrichtigungen</button><button onclick="settingsTab('app',this)">🖥 App</button><button onclick="settingsTab('about',this)">ℹ Über Nexus</button></div><div><section id="settings-appearance" class="settingsPage active"><h3>Design</h3><div class="field"><label>Grunddesign</label><div class="themeGrid">${[['midnight','Midnight','#0b121b'],['oled','OLED','#000'],['slate','Slate','#172033'],['neon','Neon','#12081d'],['light','Hell','#fff']].map(x=>`<div class="themeChoice ${nexusPrefs.theme===x[0]?'active':''}" onclick="chooseTheme('${x[0]}')"><div class="themeSwatch" style="background:${x[2]}"></div>${x[1]}</div>`).join('')}</div></div><div class="field"><label>Akzentfarbe</label><div class="colorGrid">${['#20ddff','#8b5cf6','#22c55e','#f59e0b','#ef4444','#ec4899','#3b82f6'].map(c=>`<button class="colorChoice ${nexusPrefs.accent===c?'active':''}" style="background:${c}" onclick="chooseAccent('${c}')"></button>`).join('')}</div></div><div class="settingRow"><div class="settingInfo"><b>Kompakte Ansicht</b><span>Weniger Abstand, mehr Inhalte auf dem Bildschirm.</span></div><label class="switch"><input type="checkbox" ${nexusPrefs.compact?'checked':''} onchange="nexusPrefs.compact=this.checked;saveNexusPrefs();applyNexusPrefs()"><span class="slider"></span></label></div><div class="settingRow"><div class="settingInfo"><b>Animationen reduzieren</b><span>Dezente Übergänge für ruhigere Darstellung.</span></div><label class="switch"><input type="checkbox" ${nexusPrefs.reduceMotion?'checked':''} onchange="nexusPrefs.reduceMotion=this.checked;saveNexusPrefs();applyNexusPrefs()"><span class="slider"></span></label></div></section><section id="settings-profile" class="settingsPage"><h3>Profil</h3><button class="btn primary" onclick="closeModal();openProfileSettings()">Profil bearbeiten</button><div class="notice">Profilbild, Anzeigename, Benutzername und „Über mich“ kannst du direkt in deinem Profil ändern.</div></section><section id="settings-privacy" class="settingsPage"><h3>Datenschutz</h3><div class="settingRow"><div class="settingInfo"><b>Online-Status anzeigen</b><span>Freunde sehen deinen aktuellen Status.</span></div><label class="switch"><input id="privacyPresence" type="checkbox" checked onchange="showToast(this.checked?'Online-Status sichtbar':'Online-Status verborgen')"><span class="slider"></span></label></div><div class="settingRow"><div class="settingInfo"><b>Direkte Kontaktaufnahme</b><span>Freundschaftsanfragen von anderen Nutzern erlauben.</span></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div></section><section id="settings-notifications" class="settingsPage"><h3>Benachrichtigungen</h3><div class="settingRow"><div class="settingInfo"><b>Benachrichtigungstöne</b><span>Sounds für neue Nachrichten und Anrufe.</span></div><label class="switch"><input type="checkbox" ${nexusPrefs.sounds?'checked':''} onchange="nexusPrefs.sounds=this.checked;saveNexusPrefs()"><span class="slider"></span></label></div><div class="settingRow"><div class="settingInfo"><b>Neue Nachrichten</b><span>Hinweise bei neuen privaten Nachrichten.</span></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div></section><section id="settings-app" class="settingsPage"><h3>App</h3><div class="settingRow"><div class="settingInfo"><b>Mit Windows starten</b><span>Wird für die installierte Desktop-Version vorbereitet.</span></div><label class="switch"><input type="checkbox" ${nexusPrefs.autoStart?'checked':''} onchange="nexusPrefs.autoStart=this.checked;saveNexusPrefs()"><span class="slider"></span></label></div><div class="settingRow"><div class="settingInfo"><b>Beta-Hinweis anzeigen</b><span>Zeigt unten links, dass Nexus noch in der Beta ist.</span></div><label class="switch"><input type="checkbox" ${nexusPrefs.showBeta?'checked':''} onchange="nexusPrefs.showBeta=this.checked;saveNexusPrefs();applyNexusPrefs()"><span class="slider"></span></label></div><div class="notice">Automatische Updates und weitere Desktop-Einstellungen kommen mit der nächsten Installer-Version.</div></section><section id="settings-about" class="settingsPage"><h3>Über Nexus</h3><div class="notice"><b>Nexus by Fabisstore</b><br>Kommunikationsplattform für Freunde und Communities.<br><br>Status: Beta</div></section></div></div><div class="modalActions"><button class="btn" onclick="closeModal()">Schließen</button></div>`}
+function settingsTab(id,btn){document.querySelectorAll('.settingsPage').forEach(x=>x.classList.remove('active'));document.getElementById('settings-'+id)?.classList.add('active');document.querySelectorAll('.settingsNav button').forEach(x=>x.classList.remove('active'));btn?.classList.add('active')}
+function chooseTheme(theme){nexusPrefs.theme=theme;saveNexusPrefs();applyNexusPrefs();openModal('settings')}
+function chooseAccent(accent){nexusPrefs.accent=accent;saveNexusPrefs();applyNexusPrefs();openModal('settings')}
+function openSettings(){openModal('settings')}
+// extend modal routing without breaking the existing modal implementation
+const nexusOpenModalV19=window.openModal;window.openModal=function(type){if(type==='settings'){const b=document.getElementById('back'),m=document.getElementById('modal');b.style.display='flex';m.innerHTML=settingsHtml();return}nexusOpenModalV19(type)};
+// status persistence and presence lifecycle
+state.presence=state.presence||'online';applyNexusPrefs();updatePresenceUI();
+window.addEventListener('beforeunload',()=>{if(supabaseClient&&currentUser&&state.presence==='online')supabaseClient.from('profiles').update({status:'offline'}).eq('id',currentUser.id)});
+document.addEventListener('click',e=>{const m=document.getElementById('statusMenu'),p=document.getElementById('statusPill');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!p?.contains(e.target))m.classList.remove('open')});
+
+
+function nexusFriendStatus(f){const st=f.status||(f.online?'online':'offline');return st}
+function nexusStatusHtml(f){const st=nexusFriendStatus(f);return `<span class="${st==='online'?'online':st==='away'?'status-away':'offline'}">● ${presenceLabel(st)}</span>`}
+window.renderFriends=function(){const list=document.getElementById('friendsList');if(!list)return;const friends=state.friends||[];list.innerHTML=friends.map(f=>`<div class="row"><div class="avatar">${esc((f.name||'?')[0])}</div><div class="grow"><b>${esc(f.name)}</b><div class="muted">${esc(f.tag||'')}</div></div>${nexusStatusHtml(f)}<button class="btn" onclick="openChatById('${esc(f.id)}')">✉</button><button class="btn" onclick="startCall('${esc(f.name)}')">☎</button></div>`).join('')||'<div class="muted">Noch keine Freunde.</div>';renderFriendRequests()};
+setTimeout(async()=>{if(currentUser&&state.presence!=='offline'){await setPresence(state.presence||'online')}updatePresenceUI()},1500);
+
 </script></body></html>
