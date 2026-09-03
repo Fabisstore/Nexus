@@ -1,0 +1,63 @@
+{
+  "name": "nexus-by-fabisstore",
+  "version": "0.4.0",
+  "description": "Nexus by Fabisstore – online communication platform",
+  "main": "main.js",
+  "author": "Fabisstore",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win nsis portable"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.fabisstore.nexus",
+    "productName": "Nexus",
+    "artifactName": "Nexus-Setup-${version}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/**"
+    ],
+    "win": {
+      "icon": "assets/nexus.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Nexus"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Fabisstore",
+        "repo": "Nexus"
+      }
+    ]
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.0",
+    "electron-updater": "^6.6.2"
+  }
+}

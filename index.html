@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexus — by Fabisstore</title><link rel="icon" href="assets/nexus-logo.png">
+<style>
+:root{--bg:#060a10;--panel:#0b121b;--panel2:#0e1924;--line:rgba(71,226,255,.14);--cyan:#20ddff;--text:#effcff;--muted:#8196a3;--good:#3fe29a;--danger:#ff5577;--shadow:0 24px 80px rgba(0,0,0,.45)}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:radial-gradient(circle at 50% -20%,#103340 0,#080d14 38%,#05070b 100%);color:var(--text);font:14px Segoe UI,Inter,Arial,sans-serif}button,input{font:inherit}button{border:0;cursor:pointer;color:inherit}
+.app{min-height:100vh}.top{height:72px;display:flex;align-items:center;padding:0 28px;border-bottom:1px solid var(--line);background:rgba(5,10,16,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:12px}.brand img{width:42px;height:42px;border-radius:13px;border:1px solid rgba(32,221,255,.4);box-shadow:0 0 24px rgba(32,221,255,.18)}.brandText{font-weight:900;font-size:18px}.brandText small{display:block;color:var(--cyan);font-size:9px;letter-spacing:1.6px;margin-top:2px}.topSearch{margin-left:42px;width:min(500px,45vw);background:#0b1620;border:1px solid #1a303b;border-radius:13px;padding:11px 14px;color:#fff;outline:none}.topSearch:focus{border-color:rgba(32,221,255,.55)}.topRight{margin-left:auto;display:flex;gap:10px;align-items:center}.pill{padding:9px 12px;border:1px solid #18303b;background:#0a151e;border-radius:11px;color:#8da5b0;font-size:12px}.pill span{color:var(--good)}.btn{padding:10px 14px;border-radius:11px;background:#14232f;color:#dffaff}.btn:hover{background:#1a303d}.primary{background:var(--cyan);color:#001116;font-weight:900}.primary:hover{filter:brightness(1.07)}
+.main{max-width:1180px;margin:0 auto;padding:58px 28px 70px}.welcome{text-align:center;margin:15px auto 34px}.welcome h1{font-size:39px;margin:0 0 9px;letter-spacing:-1px}.welcome p{margin:0;color:var(--muted);line-height:1.5}.searchGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}.searchCard{background:rgba(10,18,27,.9);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.2)}.searchHead{display:flex;align-items:center;gap:12px;margin-bottom:14px}.searchIcon{width:42px;height:42px;border-radius:13px;background:#102b35;display:grid;place-items:center;font-size:20px;color:var(--cyan)}.searchHead h2{font-size:16px;margin:0}.searchHead p{font-size:11px;color:var(--muted);margin:3px 0 0}.searchRow{display:flex;gap:9px}.searchRow input{flex:1;min-width:0;background:#071018;border:1px solid #19303b;border-radius:12px;padding:12px;color:#fff;outline:none}.searchRow input:focus{border-color:rgba(32,221,255,.5)}
+.quickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.quick{min-height:170px;text-align:left;padding:20px;border-radius:20px;background:linear-gradient(145deg,rgba(13,25,37,.96),rgba(8,15,23,.96));border:1px solid var(--line);box-shadow:0 12px 35px rgba(0,0,0,.18);transition:.18s transform,.18s border-color,.18s background;display:flex;flex-direction:column;justify-content:space-between}.quick:hover{transform:translateY(-3px);border-color:rgba(32,221,255,.4);background:linear-gradient(145deg,#112431,#0a151e)}.quickIcon{width:48px;height:48px;border-radius:15px;background:#102c37;color:var(--cyan);display:grid;place-items:center;font-size:23px}.quick h3{margin:16px 0 5px;font-size:16px}.quick p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}.arrow{margin-top:14px;color:var(--cyan);font-size:12px;font-weight:800}
+.view{display:none}.view.active{display:block}.viewHead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:20px}.viewHead h1{margin:0 0 5px;font-size:30px}.viewHead p{margin:0;color:var(--muted)}.back{margin-bottom:20px}.panel{background:rgba(10,18,27,.92);border:1px solid var(--line);border-radius:18px;padding:18px}.list{display:grid;gap:8px}.row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:#0a151e;border:1px solid #122731}.row:hover{border-color:#1d3b47}.avatar{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#20ddff,#214a59);display:grid;place-items:center;color:#001116;font-weight:900}.grow{flex:1}.muted{color:var(--muted);font-size:11px}.online{color:var(--good);font-size:11px}.offline{color:#657984;font-size:11px}.communityLogo{width:50px;height:50px;border-radius:15px;background:#102d38;color:var(--cyan);display:grid;place-items:center;font-weight:900;font-size:19px}.serverGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.serverCard{padding:15px;border:1px solid #142c37;border-radius:15px;background:#0a151e;display:flex;align-items:center;gap:12px}.serverCard .grow{min-width:0}.tag{font-size:10px;color:#6f8792;margin-top:4px}.notice{margin-top:14px;padding:13px;border-radius:12px;background:#0b1922;border:1px solid rgba(32,221,255,.13);color:#91aab5;font-size:11px;line-height:1.5}.chatLayout{display:grid;grid-template-columns:280px 1fr;gap:14px;min-height:520px}.chatList{background:#0a151e;border:1px solid var(--line);border-radius:18px;padding:10px}.chatItem{padding:12px;border-radius:12px;display:flex;gap:10px;align-items:center;cursor:pointer}.chatItem.active,.chatItem:hover{background:#112430}.chat{background:#09121a;border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column}.chatTop{padding:15px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}.chatBody{flex:1;padding:18px}.bubble{max-width:70%;padding:11px 13px;background:#102431;border-radius:14px;margin:8px 0;color:#dffaff}.chatBottom{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px}.chatBottom input{flex:1;background:#071018;border:1px solid #19303b;border-radius:11px;padding:11px;color:#fff;outline:none}
+.call{max-width:900px;margin:auto;background:#09121a;border:1px solid var(--line);border-radius:20px;min-height:570px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}.call .avatar{width:100px;height:100px;font-size:34px}.call h2{margin:18px 0 5px}.call p{color:var(--muted)}.controls{position:absolute;bottom:22px;display:flex;gap:10px}.round{width:48px;height:48px;border-radius:50%;background:#172a35}.hang{background:#e94c68}.modalBack{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:20}.modal{width:min(520px,92vw);background:#0b141e;border:1px solid rgba(32,221,255,.2);border-radius:18px;padding:20px;box-shadow:var(--shadow)}.modal h2{margin:0 0 6px}.modal p{color:var(--muted);font-size:12px}.field{margin:13px 0}.field label{display:block;color:#8ea6b2;font-size:11px;margin-bottom:6px}.field input{width:100%;background:#071018;border:1px solid #19303b;color:#fff;border-radius:10px;padding:11px;outline:none}.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.toast{position:fixed;right:20px;bottom:20px;background:#0d202b;border:1px solid rgba(32,221,255,.25);padding:12px 15px;border-radius:12px;display:none;z-index:50}
+@media(max-width:900px){.searchGrid,.quickGrid{grid-template-columns:1fr 1fr}.topSearch{margin-left:20px}.main{padding:38px 18px}.chatLayout{grid-template-columns:1fr}.chatList{display:none}.serverGrid{grid-template-columns:1fr}}
+@media(max-width:620px){.top{padding:0 14px}.topSearch{display:none}.topRight .pill{display:none}.welcome h1{font-size:30px}.searchGrid,.quickGrid{grid-template-columns:1fr}.quick{min-height:145px}}
+
+.communityLayout{display:grid;grid-template-columns:250px 1fr;gap:14px;min-height:520px}.channelPanel{padding:10px}.channelHeader{padding:10px 8px 12px;color:#dffaff}.channelItem{padding:11px 12px;border-radius:11px;cursor:pointer;color:#b7cbd2;display:flex;gap:8px;align-items:center}.channelItem:hover,.channelItem.active{background:#112430;color:#fff}.channelType{font-size:10px;color:#718994;margin-left:auto}.channelPanel .list{gap:3px}
+@media(max-width:760px){.communityLayout{grid-template-columns:1fr}.channelPanel{min-height:auto}}
+</style><style>
+/* Nexus V18 communication layer */
+.mediaPlus{width:42px;height:42px;border-radius:12px;background:#102b35;border:1px solid #1b4653;font-size:22px;color:#20ddff;flex:none}
+.voicePanel{width:min(100%,980px);margin:0 auto;background:#071018;border:1px solid var(--line);border-radius:20px;padding:18px;min-height:560px}
+.voiceTop{display:flex;align-items:center;gap:12px;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px}
+.videoGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
+.videoTile{background:#020509;border:1px solid #17303a;border-radius:16px;min-height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.videoTile video{width:100%;height:100%;object-fit:cover;display:block}
+.videoTile .tileName{position:absolute;left:10px;bottom:9px;background:rgba(0,0,0,.65);padding:5px 8px;border-radius:8px;font-size:11px}
+.voiceControls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.voiceUsers{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.channelTools{margin-left:auto;display:flex;gap:5px}.channelTools button{background:transparent;color:#78929d;padding:4px 6px;border-radius:7px}.channelTools button:hover{background:#132630;color:#20ddff}
+.attachPreview{margin-top:8px;padding:8px;border-radius:10px;background:#0b1922;border:1px solid #17313d}.attachPreview img,.attachPreview video{max-width:260px;max-height:180px;border-radius:9px;display:block}.attachFile{display:flex;align-items:center;gap:8px}
+.callOverlay{position:fixed;inset:0;background:rgba(2,5,9,.94);z-index:100;display:none;padding:24px;overflow:auto}.callOverlay.active{display:block}
+.callShell{max-width:1100px;margin:0 auto}.callHeader{display:flex;align-items:center;justify-content:space-between}.callHeader h2{margin:0}.incoming{position:fixed;right:20px;top:20px;z-index:120;background:#0c1922;border:1px solid #20ddff;border-radius:16px;padding:16px;box-shadow:0 15px 50px rgba(0,0,0,.5);display:none}
+@media(max-width:760px){.videoGrid{grid-template-columns:1fr}.voicePanel{min-height:500px}.searchGrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand"><img src="assets/nexus-logo.png"><div class="brandText">Nexus<small>by Fabisstore</small></div></div><input class="topSearch" placeholder="Nexus durchsuchen…" onkeydown="if(event.key==='Enter')globalSearch(this.value)"><div class="topRight"><div class="pill">Status: <span>unsichtbar</span></div><button class="btn" id="accountBtn" onclick="openAccount()">Anmelden</button></div></header>
+<main class="main">
+<section id="home" class="view active">
+<div class="welcome"><h1>Willkommen bei Nexus</h1><p>Deine zentrale Startseite für Freunde, Nachrichten und Communities.</p></div>
+<div class="searchGrid">
+<div class="searchCard"><div class="searchHead"><div class="searchIcon">⌕</div><div><h2>Community suchen</h2><p>Finde öffentliche Communities oder nutze einen Namen.</p></div></div><div class="searchRow"><input id="homeCommunityQ" placeholder="z. B. GTA 6, Minecraft, Gaming…"><button class="btn primary" onclick="homeCommunitySearch()">Suchen</button></div></div>
+<div class="searchCard"><div class="searchHead"><div class="searchIcon">♙</div><div><h2>Freunde finden</h2><p>Suche nach Name, Benutzername oder Nexus-Code.</p></div></div><div class="searchRow"><input id="homeFriendQ" placeholder="z. B. @Alex oder NX-1234…"><button class="btn primary" onclick="homeFriendSearch()">Suchen</button></div></div>
+</div>
+<div class="quickGrid">
+<button class="quick" onclick="go('friends')"><div><div class="quickIcon">♙</div><h3>Freunde</h3><p>Deine Freundesliste, Anfragen, Profile und direkte Chats.</p></div><div class="arrow">Öffnen →</div></button>
+<button class="quick" onclick="go('communities')"><div><div class="quickIcon">◈</div><h3>Communities</h3><p>Server entdecken, beitreten, eigene Communities erstellen und verwalten.</p></div><div class="arrow">Entdecken →</div></button>
+<button class="quick" onclick="go('messages')"><div><div class="quickIcon">✉</div><h3>Nachrichten</h3><p>Private Chats und Gruppengespräche mit deinen Kontakten.</p></div><div class="arrow">Nachrichten →</div></button>
+<button class="quick" onclick="go('call')"><div><div class="quickIcon">☎</div><h3>Anrufe</h3><p>Später direkt über Nexus Sprach- und Videoanrufe starten.</p></div><div class="arrow">Anrufbereich →</div></button>
+</div>
+<div class="notice">Deine Freunde und Kontakte werden mit deinem Nexus-Konto synchronisiert.</div>
+</section>
+
+<section id="friends" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="viewHead"><div><h1>Freunde</h1><p>Freunde, Anfragen und neue Kontakte.</p></div><button class="btn primary" onclick="openModal('addfriend')">＋ Freund hinzufügen</button></div><div class="panel"><div class="searchRow"><input id="friendQ" placeholder="Freund oder Nexus-Code suchen"><button class="btn" onclick="searchFriend()">Suchen</button></div><div id="friendResults"></div></div><div class="panel" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div><h3 style="margin:0">Freundschaftsanfragen</h3><div class="muted">Eingehende Anfragen findest du immer hier.</div></div><span id="friendRequestCount" class="pill">0</span></div><div id="friendRequestsList" class="list" style="margin-top:14px"></div></div><div class="panel" style="margin-top:14px"><h3 style="margin-top:0">Meine Freunde</h3><div id="friendsList" class="list"></div></div></section>
+
+<section id="communities" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="viewHead"><div><h1>Communities</h1><p>Öffentliche Server entdecken oder deine eigene Community erstellen.</p></div><button class="btn primary" onclick="openModal('server')">＋ Community erstellen</button></div><div class="panel"><div class="searchRow"><input id="serverQ" placeholder="z. B. GTA 6, Minecraft, Fortnite…"><button class="btn" onclick="searchCommunity()">Suchen</button></div><div id="serverResults"></div></div><div class="serverGrid" id="publicServers"></div></section>
+
+<section id="communityView" class="view"><div class="back"><button class="btn" onclick="go('communities')">← Communities</button></div><div class="viewHead"><div><h1 id="communityTitle">Community</h1><p id="communityDesc">Deine Community</p></div><button class="btn" onclick="go('communities')">Zurück</button></div><div class="communityLayout"><aside class="panel channelPanel"><div class="channelHeader"><b>Kanäle</b></div><div id="communityChannels" class="list"></div></aside><div class="chat"><div class="chatTop"><div class="communityLogo" id="communityChannelIcon">#</div><div><b id="communityChannelName">Allgemein</b><div class="muted" id="communityChannelType">Textkanal</div></div></div><div class="chatBody" id="communityChatBody"><div class="muted">Wähle einen Kanal.</div></div><div class="chatBottom"><input id="communityMessageInput" placeholder="Nachricht schreiben…" onkeydown="if(event.key==='Enter')sendCommunityMessage()"><button class="btn primary" onclick="sendCommunityMessage()">Senden</button></div></div></div></section>
+
+<section id="messages" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="viewHead"><div><h1>Nachrichten</h1><p>Private Chats mit deinen Freunden.</p></div><button class="btn primary" onclick="openModal('newchat')">＋ Neuer Chat</button></div><div class="chatLayout"><div class="chatList" id="chatList"></div><div class="chat"><div class="chatTop"><div class="avatar" id="chatAvatar">?</div><div><b id="chatName">Kein Chat ausgewählt</b><div class="muted" id="chatStatus">Wähle links einen Freund.</div></div><div style="margin-left:auto"><button class="btn" onclick="startCall(document.getElementById('chatName').textContent)">☎</button></div></div><div class="chatBody" id="chatBody"><div class="muted">Wähle einen Freund aus, um den Chat zu öffnen.</div></div><div class="chatBottom"><input id="messageInput" placeholder="Nachricht schreiben…" onkeydown="if(event.key==='Enter')sendMessage()"><button class="btn primary" onclick="sendMessage()">Senden</button></div></div></div></section>
+
+<section id="call" class="view"><div class="back"><button class="btn" onclick="go('home')">← Startseite</button></div><div class="call"><div class="avatar" id="callAvatar">F</div><h2 id="callTitle">Bereit für einen Anruf</h2><p id="callText">Wähle einen Freund aus, um einen Sprach- oder Videoanruf zu starten.</p><div class="controls"><button class="round" onclick="showToast('Mikrofon wird im Online-Backend verbunden.')">🎙</button><button class="round" onclick="showToast('Kamera wird im Online-Backend verbunden.')">▣</button><button class="round" onclick="showToast('Bildschirmfreigabe wird im Online-Backend verbunden.')">▣</button><button class="round hang" onclick="go('home')">☎</button></div></div></section>
+</main>
+<div class="modalBack" id="back"><div class="modal" id="modal"></div></div><div class="toast" id="toast"></div>
+<script>
+const KEY='nexus_v6';
+const publicServers=[
+{id:'gta6',name:'GTA 6 Deutschland',desc:'GTA 6 News, Community, Clips und Gaming.',members:'12.4K Mitglieder',icon:'G'},
+{id:'minecraft',name:'Minecraft Deutschland',desc:'Survival, SMP, Bauen und gemeinsame Projekte.',members:'8.7K Mitglieder',icon:'M'},
+{id:'fortnite',name:'Fortnite Germany',desc:'Matches, Teams, Events und LFG.',members:'6.2K Mitglieder',icon:'F'},
+{id:'gaming',name:'Nexus Gaming',desc:'Allgemeine Gaming-Community für PC und Konsole.',members:'4.1K Mitglieder',icon:'N'}
+];
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||{friends:[],communities:[],requests:[],account:null};
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function showToast(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',2600)}
+function go(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id)?.classList.add('active');if(id==='friends'){renderFriends();if(currentUser)loadProfileAndFriends();}if(id==='messages')renderChats();if(id==='communities'){renderCommunities();renderPublicServers()}window.scrollTo({top:0,behavior:'smooth'})}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function renderFriends(){const list=document.getElementById('friendsList');if(!list)return;const friends=state.friends||[];list.innerHTML=friends.map(f=>`<div class="row"><div class="avatar">${esc((f.name||'?')[0])}</div><div class="grow"><b>${esc(f.name)}</b><div class="muted">@${esc(f.username||'')}</div></div><div class="${f.online?'online':'offline'}">● ${f.online?'online':'offline'}</div><button class="btn" onclick="openChatById('${esc(f.id)}')">✉</button><button class="btn" onclick="startCall('${esc(f.name)}')">☎</button></div>`).join('')||'<div class="muted">Noch keine Freunde.</div>';renderFriendRequests();}
+function renderChats(){const el=document.getElementById('chatList'); if(!el)return; el.innerHTML=(state.friends||[]).map((f,i)=>`<div class="chatItem ${i===0?'active':''}" onclick="openChatById('${esc(f.id)}')"><div class="avatar">${esc((f.name||'?')[0])}</div><div><b>${esc(f.name)}</b><div class="muted">Privater Chat</div></div></div>`).join('')||'<div class="muted" style="padding:12px">Noch keine Chats.</div>';}
+let activeFriendId=null;
+async function openChatById(id){activeFriendId=id;const f=(state.friends||[]).find(x=>x.id===id);if(!f)return;go('messages');await loadDirectChat(f);}
+function openChat(name){const f=(state.friends||[]).find(x=>x.name===name); if(f) openChatById(f.id); else {go('messages');showToast('Kein Kontakt gefunden.')}}
+function startCall(name){go('call');document.getElementById('callAvatar').textContent=(name[0]||'?').toUpperCase();document.getElementById('callTitle').textContent='Anruf mit '+name;document.getElementById('callText').textContent='Sprach- und Videoanrufe werden über Nexus verbunden.'}
+function renderCommunities(){const el=document.getElementById('publicServers');if(!el)return;const mine=(state.communities||[]).map(c=>`<div class="serverCard"><div class="communityLogo">${esc((c.name||'N')[0].toUpperCase())}</div><div class="grow"><b>${esc(c.name)}</b><div class="tag">Meine Community</div><div class="muted" style="margin-top:4px">${esc(c.desc||'')}</div></div><button class="btn" onclick="openCommunity('${esc(c.id)}')">Öffnen</button></div>`).join('');el.innerHTML=mine+(mine?'<div style="height:10px"></div>':'')+publicServers.map(s=>`<div class="serverCard"><div class="communityLogo">${s.icon}</div><div class="grow"><b>${s.name}</b><div class="tag">${s.members}</div><div class="muted" style="margin-top:4px">${s.desc}</div></div><button class="btn primary" onclick="joinServer('${esc(s.id)}','${esc(s.name)}')">Beitreten</button></div>`).join('')}
+function renderPublicServers(){renderCommunities()}
+async function loadMyCommunities(){if(!supabaseClient||!currentUser)return;const {data,error}=await supabaseClient.from('community_members').select('community_id,role').eq('user_id',currentUser.id);if(error){console.error(error);return;}const ids=(data||[]).map(x=>x.community_id);if(!ids.length){state.communities=[];save();renderCommunities();return;}const {data:rows,error:e}=await supabaseClient.from('communities').select('id,name,description').in('id',ids);if(e){console.error(e);return;}state.communities=(rows||[]).map(c=>({id:c.id,name:c.name,desc:c.description||''}));save();renderCommunities()}
+async function joinServer(id,name){if(!supabaseClient||!currentUser){showToast('Bitte zuerst anmelden.');return;}const {error}=await supabaseClient.rpc('join_public_community',{p_community_id:id});if(error){console.error(error);showToast('Community konnte nicht beigetreten werden.');return;}await loadMyCommunities();showToast(name+' beigetreten.');} 
+let activeCommunityId=null;let activeCommunityChannelId=null;let communityRealtimeChannel=null;
+async function openCommunity(id){
+  if(!supabaseClient||!currentUser){showToast('Bitte zuerst anmelden.');return;}
+  const c=(state.communities||[]).find(x=>x.id===id); if(!c)return;
+  activeCommunityId=id; document.getElementById('communityTitle').textContent=c.name; document.getElementById('communityDesc').textContent=c.desc||'Community'; go('communityView');
+  await loadCommunityChannels(id);
+}
+async function loadCommunityChannels(communityId){
+  const box=document.getElementById('communityChannels'); if(!box)return;
+  const {data,error}=await supabaseClient.from('channels').select('id,name,type,position').eq('community_id',communityId).order('position',{ascending:true});
+  if(error){console.error(error);box.innerHTML='<div class="notice">Kanäle konnten nicht geladen werden.</div>';return;}
+  if(!data?.length){box.innerHTML='<div class="muted" style="padding:10px">Keine Kanäle vorhanden.</div>';return;}
+  box.innerHTML=data.map((ch,i)=>`<div class="channelItem ${i===0?'active':''}" onclick="openCommunityChannel('${esc(ch.id)}','${esc(ch.name)}','${esc(ch.type)}')"><span>${ch.type==='voice'?'🔊':'#'}</span><b>${esc(ch.name)}</b><span class="channelType">${ch.type==='voice'?'Voice':'Text'}</span></div>`).join('');
+  openCommunityChannel(data[0].id,data[0].name,data[0].type);
+}
+async function openCommunityChannel(id,name,type){
+  activeCommunityChannelId=id; document.getElementById('communityChannelName').textContent=name; document.getElementById('communityChannelType').textContent=type==='voice'?'Sprachkanal':'Textkanal'; document.getElementById('communityChannelIcon').textContent=type==='voice'?'🔊':'#';
+  document.querySelectorAll('.channelItem').forEach(x=>x.classList.remove('active')); event?.currentTarget?.classList.add('active');
+  const body=document.getElementById('communityChatBody');
+  if(type==='voice'){body.innerHTML='<div class="notice">Sprachkanal ausgewählt. Sprach- und Videochat verbinden wir im nächsten Schritt.</div>';return;}
+  const {data,error}=await supabaseClient.from('messages').select('id,author_id,content,created_at').eq('channel_id',id).is('deleted_at',null).order('created_at',{ascending:true}).limit(200);
+  if(error){console.error(error);body.innerHTML='<div class="notice">Nachrichten konnten nicht geladen werden.</div>';return;}
+  await renderCommunityMessages(data||[]); subscribeCommunityChannel(id);
+}
+async function renderCommunityMessages(rows){
+ const body=document.getElementById('communityChatBody'); if(!body)return; if(!rows.length){body.innerHTML='<div class="muted">Noch keine Nachrichten in diesem Kanal.</div>';return;}
+ const ids=[...new Set(rows.map(x=>x.author_id))]; const {data:profiles}=await supabaseClient.from('profiles').select('id,display_name,username').in('id',ids); const map=Object.fromEntries((profiles||[]).map(p=>[p.id,p]));
+ body.innerHTML=rows.map(m=>`<div class="bubble" style="${m.author_id===currentUser.id?'margin-left:auto;background:#0f3440;':''}"><b style="font-size:11px">${esc(map[m.author_id]?.display_name||map[m.author_id]?.username||'Nexus-Nutzer')}</b><div>${esc(m.content)}</div><small style="opacity:.55;display:block;margin-top:5px">${formatMessageTime(m.created_at)}</small></div>`).join(''); body.scrollTop=body.scrollHeight;
+}
+function subscribeCommunityChannel(channelId){
+ if(communityRealtimeChannel){try{supabaseClient.removeChannel(communityRealtimeChannel)}catch(e){}}
+ communityRealtimeChannel=supabaseClient.channel('community-chat-'+channelId).on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'channel_id=eq.'+channelId},async payload=>{const m=payload.new; if(m.author_id===currentUser.id)return; const body=document.getElementById('communityChatBody'); if(!body)return; const {data:p}=await supabaseClient.from('profiles').select('display_name,username').eq('id',m.author_id).maybeSingle(); const empty=body.querySelector('.muted');if(empty)empty.remove(); const bubble=document.createElement('div');bubble.className='bubble';bubble.innerHTML='<b style="font-size:11px">'+esc(p?.display_name||p?.username||'Nexus-Nutzer')+'</b><div>'+esc(m.content)+'</div><small style="opacity:.55;display:block;margin-top:5px">'+formatMessageTime(m.created_at)+'</small>';body.appendChild(bubble);body.scrollTop=body.scrollHeight;}).subscribe();
+}
+async function sendCommunityMessage(){
+ const input=document.getElementById('communityMessageInput');const content=input?.value.trim();if(!content||!supabaseClient||!currentUser||!activeCommunityChannelId)return;
+ const {error}=await supabaseClient.from('messages').insert({channel_id:activeCommunityChannelId,author_id:currentUser.id,content});if(error){console.error(error);showToast('Nachricht konnte nicht gesendet werden.');return;} input.value='';
+ const {data}=await supabaseClient.from('messages').select('id,author_id,content,created_at').eq('channel_id',activeCommunityChannelId).is('deleted_at',null).order('created_at',{ascending:true}).limit(200); await renderCommunityMessages(data||[]);
+}
+ 
+
+async function searchFriend(){const q=(document.getElementById('friendQ').value||'').trim().replace(/^@/,'').toLowerCase();const r=document.getElementById('friendResults');if(!q){r.innerHTML='';return;} if(!supabaseClient||!currentUser){r.innerHTML='<div class="notice">Bitte zuerst anmelden.</div>';return;} const {data,error}=await supabaseClient.from('profiles').select('id,username,display_name,status').or(`username.ilike.%${q}%,display_name.ilike.%${q}%`).neq('id',currentUser.id).limit(20); if(error){console.error(error);r.innerHTML='<div class="notice">Suche konnte nicht geladen werden.</div>';return;} if(!data?.length){r.innerHTML='<div class="notice">Kein Nexus-Benutzer gefunden.</div>';return;} const existingIds=new Set((state.friends||[]).map(f=>f.id)); r.innerHTML=data.map(p=>{const already=existingIds.has(p.id); return `<div class="row" style="margin-top:12px"><div class="avatar">${esc((p.display_name||p.username||'?')[0])}</div><div class="grow"><b>${esc(p.display_name||p.username)}</b><div class="muted">@${esc(p.username)} · ${p.status==='online'?'online':'offline'}</div></div>${already?'<span class="muted">Bereits befreundet</span>':`<button class="btn primary" onclick="addFriend('${esc(p.id)}')">＋ Hinzufügen</button>`}</div>`}).join('');}
+function homeFriendSearch(){const q=document.getElementById('homeFriendQ').value.trim();go('friends');document.getElementById('friendQ').value=q;searchFriend()}
+function searchCommunity(){const q=(document.getElementById('serverQ').value||'').trim().toLowerCase();const r=document.getElementById('serverResults');if(!q){r.innerHTML='';return}const found=publicServers.filter(s=>(s.name+' '+s.desc).toLowerCase().includes(q));r.innerHTML=found.length?found.map(s=>`<div class="row" style="margin-top:12px"><div class="communityLogo">${s.icon}</div><div class="grow"><b>${esc(s.name)}</b><div class="muted">${esc(s.desc)}</div></div><button class="btn primary" onclick="joinServer('${esc(s.id)}','${esc(s.name)}')">Beitreten</button></div>`).join(''):'<div class="notice">Keine passende öffentliche Community gefunden.</div>'}
+function homeCommunitySearch(){const q=document.getElementById('homeCommunityQ').value.trim();go('communities');document.getElementById('serverQ').value=q;searchCommunity()}
+function globalSearch(q){if(!q.trim())return;homeCommunitySearch();document.getElementById('serverQ').value=q;searchCommunity()}
+async function addFriend(targetId){if(!supabaseClient||!currentUser){showToast('Bitte zuerst anmelden.');return;} const {data:target,error:pe}=await supabaseClient.from('profiles').select('id,username,display_name').eq('id',targetId).maybeSingle(); if(pe||!target){showToast('Benutzer nicht gefunden.');return;} const {data:existing}=await supabaseClient.from('friendships').select('id,user_id,friend_id,status').or(`and(user_id.eq.${currentUser.id},friend_id.eq.${targetId}),and(user_id.eq.${targetId},friend_id.eq.${currentUser.id})`).maybeSingle(); if(existing){if(existing.status==='accepted')showToast('Ihr seid bereits befreundet.');else showToast(existing.status==='pending'?'Es besteht bereits eine Anfrage.':'Für diesen Kontakt besteht bereits eine Sperre.');return;} const {error}=await supabaseClient.from('friendships').insert({user_id:currentUser.id,friend_id:targetId,status:'pending'}); if(error){console.error(error);showToast('Freundschaftsanfrage konnte nicht gesendet werden.');return;} showToast('Freundschaftsanfrage an '+(target.display_name||target.username)+' gesendet.');await loadProfileAndFriends(); if(document.getElementById('friendQ')) await searchFriend();}
+async function searchAndAddFriendFromModal(){const q=(document.getElementById('fq').value||'').trim().replace(/^@/,'').toLowerCase(); if(!q){showToast('Bitte Benutzername eingeben.');return;} if(!supabaseClient||!currentUser){showToast('Bitte zuerst anmelden.');return;} const {data,error}=await supabaseClient.from('profiles').select('id,username,display_name').or(`username.ilike.${q},display_name.ilike.${q}`).neq('id',currentUser.id).limit(1); if(error||!data?.length){showToast('Kein Nexus-Benutzer mit diesem Namen gefunden.');return;} closeModal(); await addFriend(data[0].id);}
+async function acceptFriend(requesterId){if(!supabaseClient||!currentUser)return;const {data,error}=await supabaseClient.from('friendships').select('id').eq('user_id',requesterId).eq('friend_id',currentUser.id).eq('status','pending').maybeSingle();if(error||!data){showToast('Anfrage nicht gefunden.');return;}const {error:updateError}=await supabaseClient.from('friendships').update({status:'accepted'}).eq('id',data.id);if(updateError){showToast('Anfrage konnte nicht angenommen werden.');return;}showToast('Freundschaft angenommen.');await loadProfileAndFriends();await loadFriendRequests();}
+async function rejectFriend(requesterId){if(!supabaseClient||!currentUser)return;const {error}=await supabaseClient.from('friendships').delete().eq('user_id',requesterId).eq('friend_id',currentUser.id).eq('status','pending');if(error){showToast('Anfrage konnte nicht abgelehnt werden.');return;}showToast('Anfrage abgelehnt.');await loadProfileAndFriends();await loadFriendRequests();}
+async function loadFriendRequests(){if(!supabaseClient||!currentUser)return;const box=document.getElementById('friendRequestsList');const count=document.getElementById('friendRequestCount');const {data,error}=await supabaseClient.from('friendships').select('id,user_id').eq('friend_id',currentUser.id).eq('status','pending');if(error){console.error(error);if(box)box.innerHTML='<div class="muted">Anfragen konnten nicht geladen werden.</div>';return;}const rows=data||[];if(count)count.textContent=String(rows.length);if(!rows.length){if(box)box.innerHTML='<div class="muted">Keine offenen Freundschaftsanfragen.</div>';state.requests=[];return;}const ids=rows.map(x=>x.user_id);const {data:profiles}=await supabaseClient.from('profiles').select('id,username,display_name').in('id',ids);const map=Object.fromEntries((profiles||[]).map(p=>[p.id,p]));state.requests=rows.map(r=>({id:r.user_id,requestId:r.id,username:map[r.user_id]?.username||'',name:map[r.user_id]?.display_name||map[r.user_id]?.username||'Nexus-Nutzer'}));renderFriendRequests();} 
+function renderFriendRequests(){const box=document.getElementById('friendRequestsList');const count=document.getElementById('friendRequestCount');if(!box)return;const rows=state.requests||[];if(count)count.textContent=String(rows.length);if(!rows.length){box.innerHTML='<div class="muted">Keine offenen Freundschaftsanfragen.</div>';return;}box.innerHTML=rows.map(r=>`<div class="row"><div class="avatar">${esc((r.name||'?')[0])}</div><div class="grow"><b>${esc(r.name)}</b><div class="muted">@${esc(r.username||'')}</div></div><button class="btn primary" onclick="acceptFriend('${esc(r.id)}')">Annehmen</button><button class="btn" onclick="rejectFriend('${esc(r.id)}')">Ablehnen</button></div>`).join('');}
+async function getOrCreateDirectConversation(friendId){
+  if(!supabaseClient||!currentUser||!friendId)return null;
+  const {data,error}=await supabaseClient.rpc('create_direct_conversation',{p_friend_id:friendId});
+  if(error){console.error(error);showToast('Chat konnte nicht geöffnet werden.');return null;}
+  return data||null;
+}
+function formatMessageTime(iso){try{return new Date(iso).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}catch{return ''}}
+function renderDirectMessages(data){const body=document.getElementById('chatBody');if(!body)return;body.innerHTML=(data||[]).map(m=>`<div class="bubble" style="${m.author_id===currentUser.id?'margin-left:auto;background:#0f3440':''}"><div>${esc(m.content)}</div><small style="opacity:.55;display:block;margin-top:5px">${formatMessageTime(m.created_at)}</small></div>`).join('')||'<div class="muted">Noch keine Nachrichten. Schreib die erste Nachricht.</div>';body.scrollTop=body.scrollHeight;}
+async function subscribeToDirectChat(convId){
+  if(window.nexusChatChannel){try{await supabaseClient.removeChannel(window.nexusChatChannel);}catch{} window.nexusChatChannel=null;}
+  if(!supabaseClient||!convId)return;
+  window.nexusChatChannel=supabaseClient.channel('nexus-dm-'+convId)
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'direct_messages',filter:'conversation_id=eq.'+convId},payload=>{
+      const body=document.getElementById('chatBody');
+      if(!body)return;
+      const m=payload.new;
+      const bubble=document.createElement('div');bubble.className='bubble';
+      if(m.author_id===currentUser.id){bubble.style.marginLeft='auto';bubble.style.background='#0f3440';}
+      bubble.innerHTML='<div>'+esc(m.content)+'</div><small style="opacity:.55;display:block;margin-top:5px">'+formatMessageTime(m.created_at)+'</small>';
+      const empty=body.querySelector('.muted');if(empty)empty.remove();body.appendChild(bubble);body.scrollTop=body.scrollHeight;
+    }).subscribe((status)=>{ console.log('Nexus chat realtime:', status); });
+}
+async function loadDirectChat(friend){
+  const name=document.getElementById('chatName'),avatar=document.getElementById('chatAvatar'),body=document.getElementById('chatBody'); name.textContent=friend.name;avatar.textContent=(friend.name||'?')[0].toUpperCase();document.getElementById('chatStatus').textContent=friend.online?'online':'offline';
+  if(!supabaseClient||!currentUser){body.innerHTML='<div class="muted">Bitte anmelden.</div>';return;}
+  const convId=await getOrCreateDirectConversation(friend.id); if(!convId){body.innerHTML='<div class="notice">Der Chat konnte nicht geöffnet werden.</div>';return;} window.activeConversationId=convId; const {data,error}=await supabaseClient.from('direct_messages').select('id,author_id,content,created_at').eq('conversation_id',convId).is('deleted_at',null).order('created_at',{ascending:true}); if(error){console.error(error);body.innerHTML='<div class="notice">Nachrichten konnten nicht geladen werden.</div>';return;} renderDirectMessages(data); await subscribeToDirectChat(convId);
+}
+async function sendMessage(){const input=document.getElementById('messageInput');const content=input?.value.trim();if(!content||!supabaseClient||!currentUser||!window.activeConversationId){return;}const convId=window.activeConversationId;const {error}=await supabaseClient.from('direct_messages').insert({conversation_id:convId,author_id:currentUser.id,content});if(error){console.error(error);showToast('Nachricht konnte nicht gesendet werden.');return;}input.value='';const {data:messages,error:loadError}=await supabaseClient.from('direct_messages').select('id,author_id,content,created_at').eq('conversation_id',convId).is('deleted_at',null).order('created_at',{ascending:true});if(loadError){console.error(loadError);return;}renderDirectMessages(messages);}
+function closeModal(){document.getElementById('back').style.display='none'}
+document.getElementById('back').onclick=e=>{if(e.target.id==='back')closeModal()};
+async function createCommunity(){const n=document.getElementById('sn').value.trim()||'Meine Community',d=document.getElementById('sd').value.trim();if(!supabaseClient||!currentUser){showToast('Bitte zuerst anmelden.');return;}const slug=n.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,48)||('community-'+Date.now());const {data,error}=await supabaseClient.rpc('create_community',{p_name:n,p_slug:slug,p_description:d});if(error){console.error(error);showToast(error.message.includes('duplicate')?'Dieser Community-Name ist bereits vergeben.':'Community konnte nicht erstellt werden.');return;}closeModal();showToast('Community erstellt.');await loadMyCommunities();go('communities')}
+
+let supabaseClient=null;
+let currentUser=null;
+let nexusConfig=null;
+
+async function loadSupabase(){
+  if(!window.nexus) return;
+  nexusConfig=await window.nexus.getConfig();
+  if(!nexusConfig?.url || !nexusConfig?.publishableKey) return;
+  try{
+    const mod=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+    supabaseClient=mod.createClient(nexusConfig.url,nexusConfig.publishableKey);
+    const {data}=await supabaseClient.auth.getSession();
+    currentUser=data?.session?.user||null;
+    updateAccountUI();
+    if(currentUser) await loadProfileAndFriends();
+    if(currentUser) await loadFriendRequests();
+    if(currentUser) await loadMyCommunities();
+    supabaseClient.auth.onAuthStateChange((_event,session)=>{
+      currentUser=session?.user||null;
+      updateAccountUI();
+      if(currentUser){ loadProfileAndFriends(); loadFriendRequests(); loadMyCommunities(); }
+    });
+  }catch(e){ console.error(e); showToast('Online-Verbindung konnte nicht geladen werden.'); }
+}
+
+function updateAccountUI(){
+  const b=document.getElementById('accountBtn');
+  if(!b)return;
+  b.textContent=currentUser?(currentUser.user_metadata?.display_name||currentUser.email?.split('@')[0]||'Konto'):'Anmelden';
+}
+
+function openAccount(){
+  if(currentUser){
+    openModal('account');
+  }else{
+    openModal('login');
+  }
+}
+
+async function loginEmail(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const password=document.getElementById('loginPassword').value;
+  if(!supabaseClient){showToast('Online-Zugang ist noch nicht eingerichtet.');return;}
+  const {error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error){showToast(error.message);return;}
+  closeModal();showToast('Erfolgreich angemeldet.');
+}
+
+async function signupEmail(){
+  const name=document.getElementById('signupName').value.trim();
+  const email=document.getElementById('signupEmail').value.trim();
+  const password=document.getElementById('signupPassword').value;
+  if(!supabaseClient){showToast('Online-Zugang ist noch nicht eingerichtet.');return;}
+  if(password.length<6){showToast('Das Passwort muss mindestens 6 Zeichen haben.');return;}
+  const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{display_name:name}}});
+  if(error){showToast(error.message);return;}
+  closeModal();showToast(data.session?'Konto erstellt.':'Konto erstellt. Bitte bestätige deine E-Mail.');
+}
+
+async function loginGoogle(){
+  if(!supabaseClient){showToast('Online-Zugang ist noch nicht eingerichtet.');return;}
+  const {error}=await supabaseClient.auth.signInWithOAuth({provider:'google'});
+  if(error) showToast(error.message);
+}
+
+async function logoutNexus(){
+  if(supabaseClient) await supabaseClient.auth.signOut();
+  closeModal();showToast('Du bist abgemeldet.');
+}
+
+async function loadProfileAndFriends(){
+  if(!supabaseClient||!currentUser)return;
+  try{
+    const {data:profile}=await supabaseClient.from('profiles').select('*').eq('id',currentUser.id).maybeSingle();
+    if(profile){
+      state.account=profile;
+      save();
+    }
+    const {data:friendRows}=await supabaseClient.from('friendships').select('friend_id,user_id,status').or(`user_id.eq.${currentUser.id},friend_id.eq.${currentUser.id}`).eq('status','accepted');
+    if(friendRows?.length){
+      const ids=friendRows.map(x=>x.user_id===currentUser.id?x.friend_id:x.user_id);
+      const {data:profiles}=await supabaseClient.from('profiles').select('id,username,display_name,status').in('id',ids);
+      if(profiles) state.friends=profiles.map(p=>({id:p.id,name:p.display_name||p.username,tag:'@'+p.username,online:p.status==='online'}));
+      save();renderFriends();renderChats();loadFriendRequests();
+    }
+  }catch(e){console.error(e)}
+}
+
+
+function openModal(type){
+  const b=document.getElementById('back'),m=document.getElementById('modal');
+  b.style.display='flex';
+  if(type==='login')m.innerHTML='<h2>Bei Nexus anmelden</h2><p>Nutze dein Nexus-Konto.</p><div class="field"><label>E-Mail</label><input id="loginEmail" type="email" autocomplete="email"></div><div class="field"><label>Passwort</label><input id="loginPassword" type="password" autocomplete="current-password" onkeydown="if(event.key===\'Enter\')loginEmail()"></div><div class="modalActions"><button class="btn" onclick="openModal(\'signup\')">Konto erstellen</button><button class="btn primary" onclick="loginEmail()">Anmelden</button></div>';
+  if(type==='signup')m.innerHTML='<h2>Nexus-Konto erstellen</h2><p>Dein Konto funktioniert auf allen Geräten.</p><div class="field"><label>Anzeigename</label><input id="signupName" autocomplete="name"></div><div class="field"><label>E-Mail</label><input id="signupEmail" type="email" autocomplete="email"></div><div class="field"><label>Passwort</label><input id="signupPassword" type="password" autocomplete="new-password"></div><div class="modalActions"><button class="btn" onclick="openModal(\'login\')">Zur Anmeldung</button><button class="btn primary" onclick="signupEmail()">Konto erstellen</button></div>';
+  if(type==='account')m.innerHTML='<h2>'+esc(currentUser?.user_metadata?.display_name||currentUser?.email||'Nexus-Konto')+'</h2><p>Dein Nexus-Konto ist verbunden.</p><div class="notice">Die globale System- und Updateverwaltung bleibt beim Hauptadministrator Fabisstore.</div><div class="modalActions"><button class="btn" onclick="closeModal()">Schließen</button><button class="btn" onclick="logoutNexus()">Abmelden</button></div>';
+  if(type==='profile')m.innerHTML='<h2>Fabisstore</h2><p>Haupt-Admin</p><div class="notice">Nur Fabisstore erhält die globale Update- und Systemverwaltung.</div><div class="modalActions"><button class="btn" onclick="closeModal()">Schließen</button></div>';
+  if(type==='server')m.innerHTML='<h2>Community erstellen</h2><p>Erstelle deine eigene Nexus-Community.</p><div class="field"><label>Name</label><input id="sn" value="Meine Community"></div><div class="field"><label>Beschreibung</label><input id="sd" value="Meine neue Nexus-Community"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="createCommunity()">Erstellen</button></div>';
+  if(type==='addfriend')m.innerHTML='<h2>Freund hinzufügen</h2><p>Suche nach Benutzername oder Nexus-Code.</p><div class="field"><label>Benutzername / Code</label><input id="fq" placeholder="@alex oder NX-1234"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="searchAndAddFriendFromModal()">Anfrage senden</button></div>';
+  if(type==='newchat')m.innerHTML='<h2>Neuer Chat</h2><p>Starte eine private Unterhaltung.</p><div class="field"><label>Empfänger</label><input placeholder="Benutzername oder Nexus-Code"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="closeModal();showToast(\'Chat wird erstellt.\');go(\'messages\')">Starten</button></div>';
+}
+
+loadSupabase();
+renderFriends();renderChats();renderPublicServers();save();
+
+
+/* V18: real media uploads + WebRTC signaling + editable community channels */
+let v18Room=null,v18Realtime=null,v18LocalStream=null,v18ScreenStream=null,v18Peers=new Map(),v18Mode='voice',v18CommunityChannel=null;
+const v18Ice={iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'}]};
+function v18EnsureUI(){
+  const chatBottom=document.querySelector('#messages .chatBottom');
+  if(chatBottom && !document.getElementById('dmPlus')){const b=document.createElement('button');b.id='dmPlus';b.className='mediaPlus';b.title='Bilder, Videos oder Dateien senden';b.textContent='＋';b.onclick=()=>document.getElementById('dmFile').click();chatBottom.prepend(b);const f=document.createElement('input');f.id='dmFile';f.type='file';f.multiple=true;f.accept='image/*,video/*,.pdf,.txt,.zip,.doc,.docx,.xlsx,.ppt,.pptx';f.style.display='none';f.onchange=()=>v18UploadFiles(f.files,'direct');chatBottom.prepend(f)}
+  const cb=document.querySelector('#communityView .chatBottom');
+  if(cb && !document.getElementById('communityPlus')){const b=document.createElement('button');b.id='communityPlus';b.className='mediaPlus';b.title='Bilder, Videos oder Dateien senden';b.textContent='＋';b.onclick=()=>document.getElementById('communityFile').click();cb.prepend(b);const f=document.createElement('input');f.id='communityFile';f.type='file';f.multiple=true;f.accept='image/*,video/*,.pdf,.txt,.zip,.doc,.docx,.xlsx,.ppt,.pptx';f.style.display='none';f.onchange=()=>v18UploadFiles(f.files,'community');cb.prepend(f)}
+  const cv=document.getElementById('call'); if(cv){cv.innerHTML='<div class="back"><button class="btn" onclick="v18LeaveCall();go(\'home\')">← Zurück</button></div><div class="voicePanel"><div class="voiceTop"><div><h2 id="v18CallTitle" style="margin:0">Kommunikation</h2><div class="muted" id="v18CallSub">Mikrofon, Kamera und Bildschirmfreigabe</div></div><span class="pill" id="v18RoomState">Bereit</span></div><div id="v18Videos" class="videoGrid"></div><div id="v18VoiceUsers" class="voiceUsers"></div><div class="voiceControls"><button class="btn" onclick="v18ToggleMic()">🎙 Mikrofon</button><button class="btn" onclick="v18ToggleCamera()">📹 Kamera</button><button class="btn" onclick="v18ToggleScreen()">🖥 Bildschirm</button><button class="btn" onclick="v18JoinCurrent()">▶ Beitreten</button><button class="btn" onclick="v18LeaveCall()">⏏ Verlassen</button><button class="btn primary" onclick="v18LeaveCall();go(\'home\')">☎ Beenden</button></div></div>'}
+  if(!document.getElementById('v18Incoming')){const x=document.createElement('div');x.id='v18Incoming';x.className='incoming';x.innerHTML='<b id="v18IncomingTitle">Eingehender Anruf</b><div class="muted" style="margin:6px 0 12px" id="v18IncomingText"></div><button class="btn primary" onclick="v18AcceptIncoming()">Annehmen</button> <button class="btn" onclick="v18RejectIncoming()">Ablehnen</button>';document.body.appendChild(x)}
+}
+function v18MediaRoom(kind,id){return 'nexus-'+kind+'-'+String(id).replace(/[^a-zA-Z0-9_-]/g,'').slice(0,90)}
+async function v18JoinRoom(room,mode,title){
+  if(!supabaseClient||!currentUser){showToast('Bitte zuerst anmelden.');return}
+  v18EnsureUI();v18Room=room;v18Mode=mode;document.getElementById('v18CallTitle').textContent=title||'Nexus Sprachchat';document.getElementById('v18CallSub').textContent=mode==='video'?'Videoanruf mit Mikrofon und Kamera':mode==='screen'?'Bildschirmübertragung':'Sprachkanal';document.getElementById('v18RoomState').textContent='Verbinde…';go('call');
+  await v18LeaveCall(false);
+  try{v18LocalStream=await navigator.mediaDevices.getUserMedia({audio:true,video:mode==='video'});}catch(e){try{v18LocalStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});}catch(err){showToast('Mikrofon konnte nicht aktiviert werden. Bitte Windows-Berechtigung erlauben.');return}}
+  v18AddTile('local',v18LocalStream,currentUser.user_metadata?.display_name||currentUser.email||'Du',true);
+  v18Realtime=supabaseClient.channel(room,{config:{broadcast:{self:true}}});
+  v18Realtime.on('broadcast',{event:'join'},async ({payload})=>{if(payload.id===currentUser.id)return;const pc=await v18MakePeer(payload.id,payload.name);const offer=await pc.createOffer();await pc.setLocalDescription(offer);v18Realtime.send({type:'broadcast',event:'offer',payload:{to:payload.id,from:currentUser.id,name:currentUser.user_metadata?.display_name||'Nexus-Nutzer',sdp:pc.localDescription}})});
+  v18Realtime.on('broadcast',{event:'offer'},async ({payload})=>{if(payload.to!==currentUser.id)return;const pc=await v18MakePeer(payload.from,payload.name);await pc.setRemoteDescription(payload.sdp);const ans=await pc.createAnswer();await pc.setLocalDescription(ans);v18Realtime.send({type:'broadcast',event:'answer',payload:{to:payload.from,from:currentUser.id,name:currentUser.user_metadata?.display_name||'Nexus-Nutzer',sdp:pc.localDescription}})});
+  v18Realtime.on('broadcast',{event:'answer'},async ({payload})=>{if(payload.to!==currentUser.id)return;const pc=v18Peers.get(payload.from);if(pc)await pc.setRemoteDescription(payload.sdp)});
+  v18Realtime.on('broadcast',{event:'ice'},async ({payload})=>{if(payload.to!==currentUser.id)return;const pc=v18Peers.get(payload.from);if(pc&&payload.candidate)try{await pc.addIceCandidate(payload.candidate)}catch{}});
+  v18Realtime.on('broadcast',{event:'leave'},({payload})=>{if(payload.id!==currentUser.id)v18RemovePeer(payload.id)});
+  await v18Realtime.subscribe();v18RoomState.textContent='Verbunden';
+  v18Realtime.send({type:'broadcast',event:'join',payload:{id:currentUser.id,name:currentUser.user_metadata?.display_name||currentUser.email||'Nexus-Nutzer'}});
+}
+async function v18MakePeer(id,name){if(v18Peers.has(id))return v18Peers.get(id);const pc=new RTCPeerConnection(v18Ice);v18Peers.set(id,pc);if(v18LocalStream)v18LocalStream.getTracks().forEach(t=>pc.addTrack(t,v18LocalStream));pc.onicecandidate=e=>{if(e.candidate&&v18Realtime)v18Realtime.send({type:'broadcast',event:'ice',payload:{to:id,from:currentUser.id,candidate:e.candidate}})};pc.ontrack=e=>{const stream=e.streams[0];v18AddTile(id,stream,name,false)};return pc}
+function v18AddTile(id,stream,name,local){let el=document.getElementById('v18tile-'+id);if(!el){el=document.createElement('div');el.className='videoTile';el.id='v18tile-'+id;el.innerHTML='<video autoplay playsinline '+(local?'muted':'')+'></video><span class="tileName"></span>';document.getElementById('v18Videos').appendChild(el)}el.querySelector('video').srcObject=stream;el.querySelector('.tileName').textContent=name+(local?' (Du)':'')}
+function v18RemovePeer(id){const pc=v18Peers.get(id);if(pc)pc.close();v18Peers.delete(id);document.getElementById('v18tile-'+id)?.remove()}
+async function v18LeaveCall(clear=true){if(v18Realtime&&currentUser){try{v18Realtime.send({type:'broadcast',event:'leave',payload:{id:currentUser.id}})}catch{}}for(const [id,pc] of v18Peers){pc.close()}v18Peers.clear();if(v18Realtime&&supabaseClient){try{await supabaseClient.removeChannel(v18Realtime)}catch{}}v18Realtime=null;if(v18LocalStream){v18LocalStream.getTracks().forEach(t=>t.stop());v18LocalStream=null}if(v18ScreenStream){v18ScreenStream.getTracks().forEach(t=>t.stop());v18ScreenStream=null}if(clear){const v=document.getElementById('v18Videos');if(v)v.innerHTML='';v18Room=null}}
+async function v18JoinCurrent(){if(v18Room){showToast('Du bist bereits verbunden.');return}if(v18CommunityChannel){await v18JoinRoom(v18MediaRoom('voice',v18CommunityChannel),'voice',document.getElementById('communityChannelName').textContent)}}
+async function v18ToggleMic(){if(!v18LocalStream){showToast('Zuerst einem Sprachchat beitreten.');return}const t=v18LocalStream.getAudioTracks()[0];if(t){t.enabled=!t.enabled;showToast(t.enabled?'Mikrofon an':'Mikrofon aus')}}
+async function v18ToggleCamera(){if(!v18LocalStream){showToast('Zuerst einem Sprachchat beitreten.');return}let t=v18LocalStream.getVideoTracks()[0];if(!t){try{const s=await navigator.mediaDevices.getUserMedia({video:true});t=s.getVideoTracks()[0];v18LocalStream.addTrack(t);for(const pc of v18Peers.values())pc.addTrack(t,v18LocalStream);v18AddTile('local',v18LocalStream,currentUser.user_metadata?.display_name||'Du',true);showToast('Kamera an')}catch{showToast('Kamera konnte nicht aktiviert werden.')}return}t.enabled=!t.enabled;showToast(t.enabled?'Kamera an':'Kamera aus')}
+async function v18ToggleScreen(){if(!v18LocalStream){showToast('Zuerst einem Sprachchat beitreten.');return}if(v18ScreenStream){v18ScreenStream.getTracks().forEach(t=>t.stop());v18ScreenStream=null;showToast('Bildschirmfreigabe beendet');return}try{v18ScreenStream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:false});const track=v18ScreenStream.getVideoTracks()[0];for(const pc of v18Peers.values()){const sender=pc.getSenders().find(s=>s.track?.kind==='video');if(sender)await sender.replaceTrack(track);else pc.addTrack(track,v18LocalStream)}v18AddTile('local-screen',v18ScreenStream,'Bildschirm',true);track.onended=()=>v18ToggleScreen();showToast('Bildschirm wird übertragen')}catch{showToast('Bildschirmfreigabe abgebrochen.')}}
+async function v18StartCallByFriend(name,video=false){const f=(state.friends||[]).find(x=>x.name===name);if(!f){showToast('Kontakt nicht gefunden.');return}const room=v18MediaRoom('call',[currentUser.id,f.id].sort().join('-'));await v18JoinRoom(room,video?'video':'voice','Anruf mit '+name)}
+function v18ShowIncoming(name,room){window.v18Incoming={name,room};const x=document.getElementById('v18Incoming');document.getElementById('v18IncomingText').textContent=name+' möchte dich anrufen.';x.style.display='block'}
+async function v18AcceptIncoming(){const x=window.v18Incoming;if(!x)return;document.getElementById('v18Incoming').style.display='none';await v18JoinRoom(x.room,'voice','Anruf mit '+x.name);window.v18Incoming=null}
+function v18RejectIncoming(){document.getElementById('v18Incoming').style.display='none';window.v18Incoming=null}
+async function v18UploadFiles(files,target){if(!files?.length||!supabaseClient||!currentUser)return;for(const file of files){try{const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const path=currentUser.id+'/'+Date.now()+'-'+safe;const {error}=await supabaseClient.storage.from('nexus-media').upload(path,file,{upsert:false,contentType:file.type||'application/octet-stream'});if(error)throw error;const {data:urlData,error:urlError}=await supabaseClient.storage.from('nexus-media').createSignedUrl(path,60*60*24*30);if(urlError)throw urlError;const attachment={name:file.name,type:file.type||'application/octet-stream',path,url:urlData.signedUrl};const payload='__ATTACH__'+JSON.stringify(attachment);if(target==='direct'&&window.activeConversationId){await supabaseClient.from('direct_messages').insert({conversation_id:window.activeConversationId,author_id:currentUser.id,content:payload})}else if(target==='community'&&activeCommunityChannelId){await supabaseClient.from('messages').insert({channel_id:activeCommunityChannelId,author_id:currentUser.id,content:payload})}else{showToast('Öffne zuerst einen Chat.');return} }catch(e){console.error(e);showToast('Datei konnte nicht hochgeladen werden: '+file.name)}}}
+function v18RenderContent(content){if(String(content).startsWith('__ATTACH__')){try{const a=JSON.parse(String(content).slice(10));if(a.type.startsWith('image/'))return '<div class="attachPreview"><img src="'+esc(a.url)+'" alt="'+esc(a.name)+'"></div><div class="muted">'+esc(a.name)+'</div>';if(a.type.startsWith('video/'))return '<div class="attachPreview"><video controls src="'+esc(a.url)+'"></video></div><div class="muted">'+esc(a.name)+'</div>';return '<div class="attachPreview"><a class="attachFile" href="'+esc(a.url)+'" target="_blank">📎 '+esc(a.name)+'</a></div>'}catch{}}
+return esc(content)}
+window.renderDirectMessages=function(data){const body=document.getElementById('chatBody');if(!body)return;body.innerHTML=(data||[]).map(m=>`<div class="bubble" style="${m.author_id===currentUser.id?'margin-left:auto;background:#0f3440':''}">${v18RenderContent(m.content)}<small style="opacity:.55;display:block;margin-top:5px">${formatMessageTime(m.created_at)}</small></div>`).join('')||'<div class="muted">Noch keine Nachrichten. Schreib die erste Nachricht.</div>';body.scrollTop=body.scrollHeight}
+window.renderCommunityMessages=async function(rows){const body=document.getElementById('communityChatBody');if(!body)return;if(!rows.length){body.innerHTML='<div class="muted">Noch keine Nachrichten in diesem Kanal.</div>';return}const ids=[...new Set(rows.map(x=>x.author_id))];const {data:profiles}=await supabaseClient.from('profiles').select('id,display_name,username').in('id',ids);const map=Object.fromEntries((profiles||[]).map(p=>[p.id,p]));body.innerHTML=rows.map(m=>`<div class="bubble" style="${m.author_id===currentUser.id?'margin-left:auto;background:#0f3440;':''}"><b style="font-size:11px">${esc(map[m.author_id]?.display_name||map[m.author_id]?.username||'Nexus-Nutzer')}</b><div>${v18RenderContent(m.content)}</div><small style="opacity:.55;display:block;margin-top:5px">${formatMessageTime(m.created_at)}</small></div>`).join('');body.scrollTop=body.scrollHeight}
+const v18OldOpenCommunityChannel=window.openCommunityChannel;
+window.openCommunityChannel=async function(id,name,type){activeCommunityChannelId=id;v18CommunityChannel=type==='voice'?id:null;document.getElementById('communityChannelName').textContent=name;document.getElementById('communityChannelType').textContent=type==='voice'?'Sprachkanal':'Textkanal';document.getElementById('communityChannelIcon').textContent=type==='voice'?'🔊':'#';document.querySelectorAll('.channelItem').forEach(x=>x.classList.remove('active'));if(type==='voice'){document.getElementById('communityChatBody').innerHTML='<div class="voicePanel" style="min-height:300px"><div class="voiceTop"><div><h2 style="margin:0">🔊 '+esc(name)+'</h2><div class="muted">Klicke auf Beitreten, um Mikrofon und Sprachchat zu starten.</div></div><button class="btn primary" onclick="v18JoinRoom(v18MediaRoom(\'voice\',v18CommunityChannel),\'voice\',\''+esc(name).replace(/'/g,"\\'")+'\')">🎙 Beitreten</button></div><div id="communityVoiceMembers" class="voiceUsers"></div></div>';return}await v18OldOpenCommunityChannel(id,name,type)};
+function v18AddChannelTools(){const p=document.querySelector('#communityView .channelHeader');if(p&&!document.getElementById('v18AddChannel')){p.style.display='flex';p.style.alignItems='center';const b=document.createElement('button');b.id='v18AddChannel';b.className='btn';b.style.marginLeft='auto';b.textContent='＋';b.title='Kanal erstellen';b.onclick=()=>openModal('channel');p.appendChild(b)}}
+const v18OldOpenCommunity=window.openCommunity;
+window.openCommunity=async function(id){v18OldOpenCommunity(id);setTimeout(v18AddChannelTools,50)};
+const v18OldOpenModal=window.openModal;
+window.openModal=function(type){if(type==='channel'){const m=document.getElementById('modal'),b=document.getElementById('back');b.style.display='flex';m.innerHTML='<h2>Kanal erstellen</h2><div class="field"><label>Name</label><input id="v18ChannelName" placeholder="z. B. Gaming oder Team-Lounge"></div><div class="field"><label>Typ</label><select id="v18ChannelType" style="width:100%;background:#071018;color:#fff;border:1px solid #19303b;border-radius:10px;padding:11px"><option value="text">Textkanal</option><option value="voice">Sprachkanal</option><option value="announcement">Ankündigung</option><option value="forum">Forum</option></select></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="v18CreateChannel()">Erstellen</button></div>';return}if(type==='editCommunity'){const m=document.getElementById('modal'),b=document.getElementById('back');b.style.display='flex';const c=(state.communities||[]).find(x=>x.id===activeCommunityId)||{};m.innerHTML='<h2>Community bearbeiten</h2><div class="field"><label>Name</label><input id="v18CommName" value="'+esc(c.name||'')+'"></div><div class="field"><label>Beschreibung</label><input id="v18CommDesc" value="'+esc(c.desc||'')+'"></div><div class="field"><label>Icon-URL (optional)</label><input id="v18CommIcon" placeholder="https://…"></div><div class="field"><label>Banner-URL (optional)</label><input id="v18CommBanner" placeholder="https://…"></div><div class="field"><label>Akzentfarbe</label><input id="v18CommColor" type="color" value="#20ddff" style="height:42px;width:80px;padding:3px"></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="v18UpdateCommunity()">Speichern</button></div>';return}return v18OldOpenModal(type)};
+async function v18CreateChannel(){const name=document.getElementById('v18ChannelName').value.trim();const type=document.getElementById('v18ChannelType').value;if(!name)return showToast('Bitte einen Namen eingeben.');const {data,error}=await supabaseClient.rpc('create_community_channel',{p_community_id:activeCommunityId,p_name:name,p_type:type});if(error){console.error(error);showToast('Kanal konnte nicht erstellt werden.');return}closeModal();showToast('Kanal erstellt.');await loadCommunityChannels(activeCommunityId)}
+async function v18UpdateCommunity(){const n=document.getElementById('v18CommName').value.trim(),d=document.getElementById('v18CommDesc').value.trim();const {error}=await supabaseClient.rpc('update_community',{p_community_id:activeCommunityId,p_name:n,p_description:d,p_icon_url:document.getElementById('v18CommIcon')?.value||null,p_banner_url:document.getElementById('v18CommBanner')?.value||null,p_accent_color:document.getElementById('v18CommColor')?.value||'#20ddff'});if(error){showToast('Community konnte nicht gespeichert werden.');return}closeModal();showToast('Community gespeichert.');await loadMyCommunities();await openCommunity(activeCommunityId)}
+function v18PatchCommunityHeader(){const h=document.querySelector('#communityView .viewHead');if(h&&!document.getElementById('v18EditComm')){const b=document.createElement('button');b.id='v18EditComm';b.className='btn';b.textContent='⚙ Bearbeiten';b.onclick=()=>openModal('editCommunity');h.appendChild(b)}}
+const v18OldStartCall=window.startCall;
+window.startCall=function(name){v18StartCallByFriend(name,false)};
+const v18OldGo=window.go;
+window.go=function(id){v18OldGo(id);if(id==='communityView'){setTimeout(()=>{v18AddChannelTools();v18PatchCommunityHeader()},60)}if(id==='messages'||id==='communityView'||id==='call')setTimeout(v18EnsureUI,50)};
+setTimeout(v18EnsureUI,300);
+
+async function v18IsManager(cid){if(!supabaseClient||!currentUser)return false;const {data}=await supabaseClient.from('community_members').select('role').eq('community_id',cid).eq('user_id',currentUser.id).maybeSingle();return ['owner','admin','moderator'].includes(data?.role)}
+window.loadCommunityChannels=async function(communityId){const box=document.getElementById('communityChannels');if(!box)return;const {data,error}=await supabaseClient.from('channels').select('id,name,type,position').eq('community_id',communityId).order('position',{ascending:true});if(error){box.innerHTML='<div class="notice">Kanäle konnten nicht geladen werden.</div>';return}const manager=await v18IsManager(communityId);if(!data?.length){box.innerHTML='<div class="muted">Keine Kanäle vorhanden.</div>';return}box.innerHTML=data.map((ch,i)=>`<div class="channelItem ${i===0?'active':''}" data-channel-id="${esc(ch.id)}" onclick="openCommunityChannel('${esc(ch.id)}','${esc(ch.name)}','${esc(ch.type)}')"><span>${ch.type==='voice'?'🔊':ch.type==='forum'?'▤':ch.type==='announcement'?'📢':'#'}</span><b>${esc(ch.name)}</b><span class="channelType">${ch.type==='voice'?'Sprache':ch.type==='forum'?'Forum':ch.type==='announcement'?'Ankündigung':'Text'}</span>${manager?`<span class="channelTools"><button onclick="event.stopPropagation();v18EditChannel('${esc(ch.id)}','${esc(ch.name)}','${esc(ch.type)}')">⚙</button><button onclick="event.stopPropagation();v18DeleteChannel('${esc(ch.id)}')">×</button></span>`:''}</div>`).join('');await openCommunityChannel(data[0].id,data[0].name,data[0].type)}
+function v18EditChannel(id,name,type){const m=document.getElementById('modal'),b=document.getElementById('back');b.style.display='flex';m.innerHTML='<h2>Kanal bearbeiten</h2><div class="field"><label>Name</label><input id="v18EditChannelName" value="'+esc(name)+'"></div><div class="field"><label>Typ</label><select id="v18EditChannelType" style="width:100%;background:#071018;color:#fff;border:1px solid #19303b;border-radius:10px;padding:11px"><option value="text">Textkanal</option><option value="voice">Sprachkanal</option><option value="announcement">Ankündigung</option><option value="forum">Forum</option></select></div><div class="modalActions"><button class="btn" onclick="closeModal()">Abbrechen</button><button class="btn primary" onclick="v18SaveChannel(\''+id+'\')">Speichern</button></div>';document.getElementById('v18EditChannelType').value=type}
+async function v18SaveChannel(id){const {error}=await supabaseClient.rpc('update_community_channel',{p_channel_id:id,p_name:document.getElementById('v18EditChannelName').value.trim(),p_type:document.getElementById('v18EditChannelType').value});if(error){showToast('Kanal konnte nicht gespeichert werden.');return}closeModal();await loadCommunityChannels(activeCommunityId);showToast('Kanal gespeichert.')}
+async function v18DeleteChannel(id){if(!confirm('Diesen Kanal wirklich löschen?'))return;const {error}=await supabaseClient.rpc('delete_community_channel',{p_channel_id:id});if(error){showToast('Kanal konnte nicht gelöscht werden.');return}if(activeCommunityChannelId===id)activeCommunityChannelId=null;await loadCommunityChannels(activeCommunityId);showToast('Kanal gelöscht.')}
+let v18UserSignal=null;
+async function v18InitUserSignal(){if(v18UserSignal||!supabaseClient||!currentUser)return;v18UserSignal=supabaseClient.channel('nexus-user-'+currentUser.id,{config:{broadcast:{self:true}}}).on('broadcast',{event:'call-invite'},({payload})=>{if(payload?.from===currentUser.id)return;v18ShowIncoming(payload.name,payload.room)}).subscribe()}
+const v18OldStartCall2=window.startCall;
+window.startCall=async function(name){const f=(state.friends||[]).find(x=>x.name===name);if(!f){showToast('Kontakt nicht gefunden.');return}const room=v18MediaRoom('call',[currentUser.id,f.id].sort().join('-'));try{const target=supabaseClient.channel('nexus-user-'+f.id,{config:{broadcast:{self:false}}});await target.subscribe();await target.send({type:'broadcast',event:'call-invite',payload:{from:currentUser.id,name:currentUser.user_metadata?.display_name||currentUser.email||'Nexus-Nutzer',room}});setTimeout(()=>supabaseClient.removeChannel(target),3000)}catch(e){console.error(e)}await v18JoinRoom(room,'voice','Anruf mit '+name)};
+const v18OldLoadSupabase2=window.loadSupabase;
+window.loadSupabase=async function(){await v18OldLoadSupabase2();setTimeout(v18InitUserSignal,1000)};
+setTimeout(()=>{v18EnsureUI();v18AddChannelTools();v18PatchCommunityHeader();if(currentUser)v18InitUserSignal()},1200);
+</script></body></html>
